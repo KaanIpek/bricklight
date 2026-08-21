@@ -89,6 +89,7 @@
 
   footer.site{background:var(--blk);color:#8a8374;text-align:center;padding:2rem;font-size:.85rem}
   footer.site b{color:var(--gold)}
+  @media(max-width:520px){nav{flex-wrap:wrap;gap:.6rem;justify-content:center}nav .logo{width:100%;text-align:center}}
 </style>
 
 <meta name="robots" content="noindex, nofollow, noarchive">
@@ -109,123 +110,7 @@
 </style>
 
 </head>
-<body>
-
-<nav>
-  <div class="logo"><b>CUTTIN' UP</b> Barber Shop &amp; Salon</div>
-  <ul>
-    <li><a href="#services">Services &amp; Prices</a></li>
-    <li><a href="#reviews">Reviews</a></li>
-    <li><a href="#promise">The Shop</a></li>
-    <li><a href="#visit">Visit</a></li>
-  </ul>
-  <a class="book" href="tel:+18437122426">Book by phone</a>
-</nav>
-
-<header class="hero">
-  <div class="pole"></div>
-  <div class="hero-in">
-    <span class="est">Myrtle Beach · Barber & Salon</span>
-    <h1>Fresh cuts.<br><span>Full service.</span><br>One chair away.</h1>
-    <p>Fades, tapers, kids' cuts, women's styling and nail care — a real neighborhood shop where the whole family gets looked after.</p>
-    <div class="hero-cta">
-      <a class="btn-g" href="tel:+18437122426">📞 (843) 712-2426</a>
-      <a class="btn-o" href="#services">See services &amp; prices</a>
-    </div>
-    <div class="badges">
-      <div><b>4.6★</b>250+ Google reviews</div>
-      <div><b>Barber + Salon</b>hair &amp; nails, one roof</div>
-      <div><b>Walk-ins</b>welcome when chairs are free</div>
-    </div>
-  </div>
-</header>
-
-<section id="services">
-  <div class="wrap">
-    <span class="eyebrow">Services</span>
-    <h2 class="sec">Two sides of the shop</h2>
-    <p class="sub">Barbering on one side, salon services on the other. Prices confirmed when you book — ask about kids' and seniors' rates.</p>
-    <div class="duo">
-      <div class="side">
-        <h3>✂️ The Barber Side</h3>
-        <p class="d">Classic and modern cuts, executed clean.</p>
-        <div class="price-row"><span>Haircut</span><span class="dots"></span><b>from $25</b></div>
-        <div class="price-row"><span>Fade / Taper</span><span class="dots"></span><b>from $30</b></div>
-        <div class="price-row"><span>Cut + Beard</span><span class="dots"></span><b>from $40</b></div>
-        <div class="price-row"><span>Kids' Cut</span><span class="dots"></span><b>from $20</b></div>
-        <div class="price-row"><span>Line-up / Edge</span><span class="dots"></span><b>from $15</b></div>
-        <p class="note-sm">Sample menu — call the shop to confirm today's prices.</p>
-      </div>
-      <div class="side">
-        <h3>💅 The Salon Side</h3>
-        <p class="d">Styling and nail care by appointment.</p>
-        <div class="price-row"><span>Women's Cut &amp; Style</span><span class="dots"></span><b>ask</b></div>
-        <div class="price-row"><span>Manicure</span><span class="dots"></span><b>ask</b></div>
-        <div class="price-row"><span>Full Nail Set</span><span class="dots"></span><b>ask</b></div>
-        <div class="price-row"><span>Polish / Design</span><span class="dots"></span><b>ask</b></div>
-        <div class="price-row"><span>Special occasion styling</span><span class="dots"></span><b>ask</b></div>
-        <p class="note-sm">Ask for Dasia's chair — her first-timers come back.</p>
-      </div>
-    </div>
-  </div>
-</section>
-
-<section class="band" id="reviews">
-  <div class="wrap">
-    <span class="eyebrow" style="color:var(--gold)">Word on the street</span>
-    <h2 class="sec">The reviews tell it</h2>
-    <div class="rev-grid">
-      <div class="rev"><div class="stars">★★★★★</div><p>"I had a wonderful experience with Dasia doing my nails for the first time. I was very pleased with her work. I am looking forward to returning to have more services done."</p><footer>— Google review</footer></div>
-      <div class="rev"><div class="stars">★★★★★</div><p>"My son's hair was butchered elsewhere. John was tagged in my post looking for help — he personally messaged me and told me to come in so he could fix it."</p><footer>— Google review</footer></div>
-      <div class="rev"><div class="stars">★★★★★</div><p>The shop answers its reviews, fixes other shops' mistakes, and keeps the whole family in one appointment.</p><footer>— What 250+ reviews add up to</footer></div>
-    </div>
-  </div>
-</section>
-
-<section id="promise">
-  <div class="wrap">
-    <span class="eyebrow">The shop</span>
-    <h2 class="sec">Why people switch to Cuttin' Up</h2>
-    <p class="sub">A cut is ten minutes of work and a week of walking around with it. We act like we know that.</p>
-    <div class="promise">
-      <div class="pr"><span class="em">👨‍👩‍👧‍👦</span><b>Whole-family shop</b><span>Dad's fade, kid's first cut, mom's nails — one stop.</span></div>
-      <div class="pr"><span class="em">🛠️</span><b>We fix bad cuts</b><span>Botched somewhere else? Come in. We've done it before.</span></div>
-      <div class="pr"><span class="em">💬</span><b>An owner who listens</b><span>John answers reviews and messages personally.</span></div>
-      <div class="pr"><span class="em">📍</span><b>Right in town</b><span>3rd Ave S — minutes from anywhere in Myrtle Beach.</span></div>
-    </div>
-  </div>
-</section>
-
-<section id="visit" style="background:#fff">
-  <div class="wrap">
-    <span class="eyebrow">Visit</span>
-    <h2 class="sec">Pull up a chair</h2>
-    <div class="visit-grid" style="margin-top:1.6rem">
-      <div class="vcard">
-        <div class="vrow"><span class="l">Address</span><span>1102 3rd Ave S, Myrtle Beach, SC 29577</span></div>
-        <div class="vrow"><span class="l">Phone</span><span><a href="tel:+18437122426"><b>(843) 712-2426</b></a></span></div>
-        <div class="vrow"><span class="l">Booking</span><span>Call ahead to lock your chair — walk-ins taken when free</span></div>
-        <div class="vrow"><span class="l">Rating</span><span>⭐ 4.6 · 250+ Google reviews</span></div>
-      </div>
-      <iframe class="map" loading="lazy" title="Map to Cuttin' Up Barber Shop"
-        src="https://maps.google.com/maps?q=Cuttin%20Up%20Barber%20Shop%20%26%20Salon%2C%201102%203rd%20Ave%20S%2C%20Myrtle%20Beach%2C%20SC&output=embed"></iframe>
-    </div>
-  </div>
-</section>
-
-<section class="cta">
-  <div class="wrap">
-    <h2>Look sharp by this afternoon.</h2>
-    <p>One call books the chair. Bring the kids.</p>
-    <a href="tel:+18437122426">📞 (843) 712-2426</a>
-  </div>
-</section>
-
-<footer class="site">
-  <b>Cuttin' Up Barber Shop &amp; Salon</b> · 1102 3rd Ave S, Myrtle Beach, SC 29577 · (843) 712-2426
-</footer>
-
-
+<body><noscript><p style="font-family:sans-serif;padding:2rem">Please enable JavaScript to view this preview.</p></noscript><script>(function(){var s="Cgo8bmF2PgogIDxkaXYgY2xhc3M9ImxvZ28iPjxiPkNVVFRJTicgVVA8L2I+IEJhcmJlciBTaG9wICZhbXA7IFNhbG9uPC9kaXY+CiAgPHVsPgogICAgPGxpPjxhIGhyZWY9IiNzZXJ2aWNlcyI+U2VydmljZXMgJmFtcDsgUHJpY2VzPC9hPjwvbGk+CiAgICA8bGk+PGEgaHJlZj0iI3Jldmlld3MiPlJldmlld3M8L2E+PC9saT4KICAgIDxsaT48YSBocmVmPSIjcHJvbWlzZSI+VGhlIFNob3A8L2E+PC9saT4KICAgIDxsaT48YSBocmVmPSIjdmlzaXQiPlZpc2l0PC9hPjwvbGk+CiAgPC91bD4KICA8YSBjbGFzcz0iYm9vayIgaHJlZj0idGVsOisxODQzNzEyMjQyNiI+Qm9vayBieSBwaG9uZTwvYT4KPC9uYXY+Cgo8aGVhZGVyIGNsYXNzPSJoZXJvIj4KICA8ZGl2IGNsYXNzPSJwb2xlIj48L2Rpdj4KICA8ZGl2IGNsYXNzPSJoZXJvLWluIj4KICAgIDxzcGFuIGNsYXNzPSJlc3QiPk15cnRsZSBCZWFjaCDCtyBCYXJiZXIgJiBTYWxvbjwvc3Bhbj4KICAgIDxoMT5GcmVzaCBjdXRzLjxicj48c3Bhbj5GdWxsIHNlcnZpY2UuPC9zcGFuPjxicj5PbmUgY2hhaXIgYXdheS48L2gxPgogICAgPHA+RmFkZXMsIHRhcGVycywga2lkcycgY3V0cywgd29tZW4ncyBzdHlsaW5nIGFuZCBuYWlsIGNhcmUg4oCUIGEgcmVhbCBuZWlnaGJvcmhvb2Qgc2hvcCB3aGVyZSB0aGUgd2hvbGUgZmFtaWx5IGdldHMgbG9va2VkIGFmdGVyLjwvcD4KICAgIDxkaXYgY2xhc3M9Imhlcm8tY3RhIj4KICAgICAgPGEgY2xhc3M9ImJ0bi1nIiBocmVmPSJ0ZWw6KzE4NDM3MTIyNDI2Ij7wn5OeICg4NDMpIDcxMi0yNDI2PC9hPgogICAgICA8YSBjbGFzcz0iYnRuLW8iIGhyZWY9IiNzZXJ2aWNlcyI+U2VlIHNlcnZpY2VzICZhbXA7IHByaWNlczwvYT4KICAgIDwvZGl2PgogICAgPGRpdiBjbGFzcz0iYmFkZ2VzIj4KICAgICAgPGRpdj48Yj40LjbimIU8L2I+MjUwKyBHb29nbGUgcmV2aWV3czwvZGl2PgogICAgICA8ZGl2PjxiPkJhcmJlciArIFNhbG9uPC9iPmhhaXIgJmFtcDsgbmFpbHMsIG9uZSByb29mPC9kaXY+CiAgICAgIDxkaXY+PGI+V2Fsay1pbnM8L2I+d2VsY29tZSB3aGVuIGNoYWlycyBhcmUgZnJlZTwvZGl2PgogICAgPC9kaXY+CiAgPC9kaXY+CjwvaGVhZGVyPgoKPHNlY3Rpb24gaWQ9InNlcnZpY2VzIj4KICA8ZGl2IGNsYXNzPSJ3cmFwIj4KICAgIDxzcGFuIGNsYXNzPSJleWVicm93Ij5TZXJ2aWNlczwvc3Bhbj4KICAgIDxoMiBjbGFzcz0ic2VjIj5Ud28gc2lkZXMgb2YgdGhlIHNob3A8L2gyPgogICAgPHAgY2xhc3M9InN1YiI+QmFyYmVyaW5nIG9uIG9uZSBzaWRlLCBzYWxvbiBzZXJ2aWNlcyBvbiB0aGUgb3RoZXIuIFByaWNlcyBjb25maXJtZWQgd2hlbiB5b3UgYm9vayDigJQgYXNrIGFib3V0IGtpZHMnIGFuZCBzZW5pb3JzJyByYXRlcy48L3A+CiAgICA8ZGl2IGNsYXNzPSJkdW8iPgogICAgICA8ZGl2IGNsYXNzPSJzaWRlIj4KICAgICAgICA8aDM+4pyC77iPIFRoZSBCYXJiZXIgU2lkZTwvaDM+CiAgICAgICAgPHAgY2xhc3M9ImQiPkNsYXNzaWMgYW5kIG1vZGVybiBjdXRzLCBleGVjdXRlZCBjbGVhbi48L3A+CiAgICAgICAgPGRpdiBjbGFzcz0icHJpY2Utcm93Ij48c3Bhbj5IYWlyY3V0PC9zcGFuPjxzcGFuIGNsYXNzPSJkb3RzIj48L3NwYW4+PGI+ZnJvbSAkMjU8L2I+PC9kaXY+CiAgICAgICAgPGRpdiBjbGFzcz0icHJpY2Utcm93Ij48c3Bhbj5GYWRlIC8gVGFwZXI8L3NwYW4+PHNwYW4gY2xhc3M9ImRvdHMiPjwvc3Bhbj48Yj5mcm9tICQzMDwvYj48L2Rpdj4KICAgICAgICA8ZGl2IGNsYXNzPSJwcmljZS1yb3ciPjxzcGFuPkN1dCArIEJlYXJkPC9zcGFuPjxzcGFuIGNsYXNzPSJkb3RzIj48L3NwYW4+PGI+ZnJvbSAkNDA8L2I+PC9kaXY+CiAgICAgICAgPGRpdiBjbGFzcz0icHJpY2Utcm93Ij48c3Bhbj5LaWRzJyBDdXQ8L3NwYW4+PHNwYW4gY2xhc3M9ImRvdHMiPjwvc3Bhbj48Yj5mcm9tICQyMDwvYj48L2Rpdj4KICAgICAgICA8ZGl2IGNsYXNzPSJwcmljZS1yb3ciPjxzcGFuPkxpbmUtdXAgLyBFZGdlPC9zcGFuPjxzcGFuIGNsYXNzPSJkb3RzIj48L3NwYW4+PGI+ZnJvbSAkMTU8L2I+PC9kaXY+CiAgICAgICAgPHAgY2xhc3M9Im5vdGUtc20iPlNhbXBsZSBtZW51IOKAlCBjYWxsIHRoZSBzaG9wIHRvIGNvbmZpcm0gdG9kYXkncyBwcmljZXMuPC9wPgogICAgICA8L2Rpdj4KICAgICAgPGRpdiBjbGFzcz0ic2lkZSI+CiAgICAgICAgPGgzPvCfkoUgVGhlIFNhbG9uIFNpZGU8L2gzPgogICAgICAgIDxwIGNsYXNzPSJkIj5TdHlsaW5nIGFuZCBuYWlsIGNhcmUgYnkgYXBwb2ludG1lbnQuPC9wPgogICAgICAgIDxkaXYgY2xhc3M9InByaWNlLXJvdyI+PHNwYW4+V29tZW4ncyBDdXQgJmFtcDsgU3R5bGU8L3NwYW4+PHNwYW4gY2xhc3M9ImRvdHMiPjwvc3Bhbj48Yj5hc2s8L2I+PC9kaXY+CiAgICAgICAgPGRpdiBjbGFzcz0icHJpY2Utcm93Ij48c3Bhbj5NYW5pY3VyZTwvc3Bhbj48c3BhbiBjbGFzcz0iZG90cyI+PC9zcGFuPjxiPmFzazwvYj48L2Rpdj4KICAgICAgICA8ZGl2IGNsYXNzPSJwcmljZS1yb3ciPjxzcGFuPkZ1bGwgTmFpbCBTZXQ8L3NwYW4+PHNwYW4gY2xhc3M9ImRvdHMiPjwvc3Bhbj48Yj5hc2s8L2I+PC9kaXY+CiAgICAgICAgPGRpdiBjbGFzcz0icHJpY2Utcm93Ij48c3Bhbj5Qb2xpc2ggLyBEZXNpZ248L3NwYW4+PHNwYW4gY2xhc3M9ImRvdHMiPjwvc3Bhbj48Yj5hc2s8L2I+PC9kaXY+CiAgICAgICAgPGRpdiBjbGFzcz0icHJpY2Utcm93Ij48c3Bhbj5TcGVjaWFsIG9jY2FzaW9uIHN0eWxpbmc8L3NwYW4+PHNwYW4gY2xhc3M9ImRvdHMiPjwvc3Bhbj48Yj5hc2s8L2I+PC9kaXY+CiAgICAgICAgPHAgY2xhc3M9Im5vdGUtc20iPkFzayBmb3IgRGFzaWEncyBjaGFpciDigJQgaGVyIGZpcnN0LXRpbWVycyBjb21lIGJhY2suPC9wPgogICAgICA8L2Rpdj4KICAgIDwvZGl2PgogIDwvZGl2Pgo8L3NlY3Rpb24+Cgo8c2VjdGlvbiBjbGFzcz0iYmFuZCIgaWQ9InJldmlld3MiPgogIDxkaXYgY2xhc3M9IndyYXAiPgogICAgPHNwYW4gY2xhc3M9ImV5ZWJyb3ciIHN0eWxlPSJjb2xvcjp2YXIoLS1nb2xkKSI+V29yZCBvbiB0aGUgc3RyZWV0PC9zcGFuPgogICAgPGgyIGNsYXNzPSJzZWMiPlRoZSByZXZpZXdzIHRlbGwgaXQ8L2gyPgogICAgPGRpdiBjbGFzcz0icmV2LWdyaWQiPgogICAgICA8ZGl2IGNsYXNzPSJyZXYiPjxkaXYgY2xhc3M9InN0YXJzIj7imIXimIXimIXimIXimIU8L2Rpdj48cD4iSSBoYWQgYSB3b25kZXJmdWwgZXhwZXJpZW5jZSB3aXRoIERhc2lhIGRvaW5nIG15IG5haWxzIGZvciB0aGUgZmlyc3QgdGltZS4gSSB3YXMgdmVyeSBwbGVhc2VkIHdpdGggaGVyIHdvcmsuIEkgYW0gbG9va2luZyBmb3J3YXJkIHRvIHJldHVybmluZyB0byBoYXZlIG1vcmUgc2VydmljZXMgZG9uZS4iPC9wPjxmb290ZXI+4oCUIEdvb2dsZSByZXZpZXc8L2Zvb3Rlcj48L2Rpdj4KICAgICAgPGRpdiBjbGFzcz0icmV2Ij48ZGl2IGNsYXNzPSJzdGFycyI+4piF4piF4piF4piF4piFPC9kaXY+PHA+Ik15IHNvbidzIGhhaXIgd2FzIGJ1dGNoZXJlZCBlbHNld2hlcmUuIEpvaG4gd2FzIHRhZ2dlZCBpbiBteSBwb3N0IGxvb2tpbmcgZm9yIGhlbHAg4oCUIGhlIHBlcnNvbmFsbHkgbWVzc2FnZWQgbWUgYW5kIHRvbGQgbWUgdG8gY29tZSBpbiBzbyBoZSBjb3VsZCBmaXggaXQuIjwvcD48Zm9vdGVyPuKAlCBHb29nbGUgcmV2aWV3PC9mb290ZXI+PC9kaXY+CiAgICAgIDxkaXYgY2xhc3M9InJldiI+PGRpdiBjbGFzcz0ic3RhcnMiPuKYheKYheKYheKYheKYhTwvZGl2PjxwPlRoZSBzaG9wIGFuc3dlcnMgaXRzIHJldmlld3MsIGZpeGVzIG90aGVyIHNob3BzJyBtaXN0YWtlcywgYW5kIGtlZXBzIHRoZSB3aG9sZSBmYW1pbHkgaW4gb25lIGFwcG9pbnRtZW50LjwvcD48Zm9vdGVyPuKAlCBXaGF0IDI1MCsgcmV2aWV3cyBhZGQgdXAgdG88L2Zvb3Rlcj48L2Rpdj4KICAgIDwvZGl2PgogIDwvZGl2Pgo8L3NlY3Rpb24+Cgo8c2VjdGlvbiBpZD0icHJvbWlzZSI+CiAgPGRpdiBjbGFzcz0id3JhcCI+CiAgICA8c3BhbiBjbGFzcz0iZXllYnJvdyI+VGhlIHNob3A8L3NwYW4+CiAgICA8aDIgY2xhc3M9InNlYyI+V2h5IHBlb3BsZSBzd2l0Y2ggdG8gQ3V0dGluJyBVcDwvaDI+CiAgICA8cCBjbGFzcz0ic3ViIj5BIGN1dCBpcyB0ZW4gbWludXRlcyBvZiB3b3JrIGFuZCBhIHdlZWsgb2Ygd2Fsa2luZyBhcm91bmQgd2l0aCBpdC4gV2UgYWN0IGxpa2Ugd2Uga25vdyB0aGF0LjwvcD4KICAgIDxkaXYgY2xhc3M9InByb21pc2UiPgogICAgICA8ZGl2IGNsYXNzPSJwciI+PHNwYW4gY2xhc3M9ImVtIj7wn5Go4oCN8J+RqeKAjfCfkafigI3wn5GmPC9zcGFuPjxiPldob2xlLWZhbWlseSBzaG9wPC9iPjxzcGFuPkRhZCdzIGZhZGUsIGtpZCdzIGZpcnN0IGN1dCwgbW9tJ3MgbmFpbHMg4oCUIG9uZSBzdG9wLjwvc3Bhbj48L2Rpdj4KICAgICAgPGRpdiBjbGFzcz0icHIiPjxzcGFuIGNsYXNzPSJlbSI+8J+boO+4jzwvc3Bhbj48Yj5XZSBmaXggYmFkIGN1dHM8L2I+PHNwYW4+Qm90Y2hlZCBzb21ld2hlcmUgZWxzZT8gQ29tZSBpbi4gV2UndmUgZG9uZSBpdCBiZWZvcmUuPC9zcGFuPjwvZGl2PgogICAgICA8ZGl2IGNsYXNzPSJwciI+PHNwYW4gY2xhc3M9ImVtIj7wn5KsPC9zcGFuPjxiPkFuIG93bmVyIHdobyBsaXN0ZW5zPC9iPjxzcGFuPkpvaG4gYW5zd2VycyByZXZpZXdzIGFuZCBtZXNzYWdlcyBwZXJzb25hbGx5Ljwvc3Bhbj48L2Rpdj4KICAgICAgPGRpdiBjbGFzcz0icHIiPjxzcGFuIGNsYXNzPSJlbSI+8J+TjTwvc3Bhbj48Yj5SaWdodCBpbiB0b3duPC9iPjxzcGFuPjNyZCBBdmUgUyDigJQgbWludXRlcyBmcm9tIGFueXdoZXJlIGluIE15cnRsZSBCZWFjaC48L3NwYW4+PC9kaXY+CiAgICA8L2Rpdj4KICA8L2Rpdj4KPC9zZWN0aW9uPgoKPHNlY3Rpb24gaWQ9InZpc2l0IiBzdHlsZT0iYmFja2dyb3VuZDojZmZmIj4KICA8ZGl2IGNsYXNzPSJ3cmFwIj4KICAgIDxzcGFuIGNsYXNzPSJleWVicm93Ij5WaXNpdDwvc3Bhbj4KICAgIDxoMiBjbGFzcz0ic2VjIj5QdWxsIHVwIGEgY2hhaXI8L2gyPgogICAgPGRpdiBjbGFzcz0idmlzaXQtZ3JpZCIgc3R5bGU9Im1hcmdpbi10b3A6MS42cmVtIj4KICAgICAgPGRpdiBjbGFzcz0idmNhcmQiPgogICAgICAgIDxkaXYgY2xhc3M9InZyb3ciPjxzcGFuIGNsYXNzPSJsIj5BZGRyZXNzPC9zcGFuPjxzcGFuPjExMDIgM3JkIEF2ZSBTLCBNeXJ0bGUgQmVhY2gsIFNDIDI5NTc3PC9zcGFuPjwvZGl2PgogICAgICAgIDxkaXYgY2xhc3M9InZyb3ciPjxzcGFuIGNsYXNzPSJsIj5QaG9uZTwvc3Bhbj48c3Bhbj48YSBocmVmPSJ0ZWw6KzE4NDM3MTIyNDI2Ij48Yj4oODQzKSA3MTItMjQyNjwvYj48L2E+PC9zcGFuPjwvZGl2PgogICAgICAgIDxkaXYgY2xhc3M9InZyb3ciPjxzcGFuIGNsYXNzPSJsIj5Cb29raW5nPC9zcGFuPjxzcGFuPkNhbGwgYWhlYWQgdG8gbG9jayB5b3VyIGNoYWlyIOKAlCB3YWxrLWlucyB0YWtlbiB3aGVuIGZyZWU8L3NwYW4+PC9kaXY+CiAgICAgICAgPGRpdiBjbGFzcz0idnJvdyI+PHNwYW4gY2xhc3M9ImwiPlJhdGluZzwvc3Bhbj48c3Bhbj7irZAgNC42IMK3IDI1MCsgR29vZ2xlIHJldmlld3M8L3NwYW4+PC9kaXY+CiAgICAgIDwvZGl2PgogICAgICA8aWZyYW1lIGNsYXNzPSJtYXAiIGxvYWRpbmc9ImxhenkiIHRpdGxlPSJNYXAgdG8gQ3V0dGluJyBVcCBCYXJiZXIgU2hvcCIKICAgICAgICBzcmM9Imh0dHBzOi8vbWFwcy5nb29nbGUuY29tL21hcHM/cT1DdXR0aW4lMjBVcCUyMEJhcmJlciUyMFNob3AlMjAlMjYlMjBTYWxvbiUyQyUyMDExMDIlMjAzcmQlMjBBdmUlMjBTJTJDJTIwTXlydGxlJTIwQmVhY2glMkMlMjBTQyZvdXRwdXQ9ZW1iZWQiPjwvaWZyYW1lPgogICAgPC9kaXY+CiAgPC9kaXY+Cjwvc2VjdGlvbj4KCjxzZWN0aW9uIGNsYXNzPSJjdGEiPgogIDxkaXYgY2xhc3M9IndyYXAiPgogICAgPGgyPkxvb2sgc2hhcnAgYnkgdGhpcyBhZnRlcm5vb24uPC9oMj4KICAgIDxwPk9uZSBjYWxsIGJvb2tzIHRoZSBjaGFpci4gQnJpbmcgdGhlIGtpZHMuPC9wPgogICAgPGEgaHJlZj0idGVsOisxODQzNzEyMjQyNiI+8J+TniAoODQzKSA3MTItMjQyNjwvYT4KICA8L2Rpdj4KPC9zZWN0aW9uPgoKPGZvb3RlciBjbGFzcz0ic2l0ZSI+CiAgPGI+Q3V0dGluJyBVcCBCYXJiZXIgU2hvcCAmYW1wOyBTYWxvbjwvYj4gwrcgMTEwMiAzcmQgQXZlIFMsIE15cnRsZSBCZWFjaCwgU0MgMjk1NzcgwrcgKDg0MykgNzEyLTI0MjYKPC9mb290ZXI+Cgo=";var b=atob(s);var u=new Uint8Array(b.length);for(var i=0;i<b.length;i++)u[i]=b.charCodeAt(i);document.body.insertAdjacentHTML("afterbegin",new TextDecoder("utf-8").decode(u));})();</script>
 <div class="bl-watermark" aria-hidden="true"></div>
 <div class="bl-banner">✨ This is a <b>free preview</b> built for <b>Cuttin' Up Barber Shop & Salon</b> by <b>Bricklight Studio</b> — it is not live yet. Like it? It can be yours this week.</div>
 <script>
@@ -239,9 +124,18 @@
   ['contextmenu','selectstart','copy','cut','dragstart'].forEach(function(ev){
     document.addEventListener(ev, function(e){ e.preventDefault(); }, {capture:true});
   });
+  window.addEventListener('beforeprint', function(){ document.body.style.visibility='hidden'; });
+  window.addEventListener('afterprint', function(){ document.body.style.visibility=''; });
+  setInterval(function(){
+    var open = (window.outerWidth - window.innerWidth > 160) || (window.outerHeight - window.innerHeight > 160);
+    var o = document.getElementById('bl-dt');
+    if (open && !o) { o=document.createElement('div'); o.id='bl-dt'; o.className='bl-expired';
+      o.innerHTML='<h1>🔒 Preview paused</h1><p>Developer tools are disabled on this preview. Close them to continue viewing, or contact Bricklight Studio for a live walkthrough.</p>'; document.body.appendChild(o); }
+    if (!open && o) { o.remove(); }
+  }, 800);
   document.addEventListener('keydown', function(e){
     var k = e.key.toLowerCase();
-    if ((e.ctrlKey || e.metaKey) && ['s','u','p','a','c'].indexOf(k) !== -1) { e.preventDefault(); }
+    if ((e.ctrlKey || e.metaKey) && ['s','u','p','a','c','i','j'].indexOf(k) !== -1) { e.preventDefault(); }
     if (e.key === 'F12') { e.preventDefault(); }
   }, {capture:true});
 })();
