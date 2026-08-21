@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>C.A.R.S. Inc — European &amp; Domestic Auto Repair in Myrtle Beach, SC</title>
+<meta name="description" content="Auto repair in Myrtle Beach, SC with a perfect 5.0 Google rating. Transmissions, sensors, diagnostics — honest, knowledgeable, fast. Call (843) 232-7800.">
+<style>
+  :root{
+    --char:#22252a; --char2:#2b2f36; --red:#d63b30; --red-dk:#b02c23;
+    --bg:#f4f4f5; --ink:#1e2126; --mut:#6b7078; --line:#e2e2e4;
+  }
+  *{margin:0;padding:0;box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{font-family:'Segoe UI',system-ui,sans-serif;background:var(--bg);color:var(--ink);line-height:1.6}
+  a{color:inherit}
+
+  .top{background:var(--char);color:#aab1bb;font-size:.83rem;padding:.4rem 1.5rem;display:flex;justify-content:space-between;flex-wrap:wrap;gap:.5rem}
+  .top b{color:#fff}
+  nav{position:sticky;top:0;z-index:60;background:#fff;border-bottom:3px solid var(--red);display:flex;align-items:center;justify-content:space-between;padding:.8rem 1.5rem}
+  .logo{font-weight:900;font-size:1.3rem;letter-spacing:1px}
+  .logo span{color:var(--red)}
+  .logo small{display:block;font-size:.62rem;letter-spacing:3px;color:var(--mut);font-weight:600}
+  nav ul{display:flex;gap:1.4rem;list-style:none;font-size:.92rem;font-weight:700}
+  nav ul a{text-decoration:none;color:#3c4046}
+  nav ul a:hover{color:var(--red)}
+  .call{background:var(--red);color:#fff;font-weight:800;padding:.55rem 1.2rem;border-radius:4px;text-decoration:none;white-space:nowrap}
+  .call:hover{background:var(--red-dk)}
+  @media(max-width:780px){nav ul{display:none}}
+
+  header.hero{background:linear-gradient(100deg,var(--char) 55%,var(--char2) 55.2%);color:#fff;padding:5rem 1.5rem}
+  .hero-in{max-width:1020px;margin:0 auto;display:grid;grid-template-columns:1.2fr .8fr;gap:3rem;align-items:center}
+  @media(max-width:860px){.hero-in{grid-template-columns:1fr}}
+  .flag{display:inline-block;background:var(--red);color:#fff;font-weight:800;font-size:.78rem;letter-spacing:2px;padding:.35rem 1rem;margin-bottom:1.2rem;clip-path:polygon(0 0,100% 0,94% 100%,0 100%)}
+  .hero h1{font-size:clamp(2.1rem,5vw,3.2rem);line-height:1.13;font-weight:900}
+  .hero h1 em{font-style:normal;color:var(--red);}
+  .hero p{margin:1.2rem 0 2rem;color:#b6bcc6;max-width:500px;font-size:1.05rem}
+  .btn-r{display:inline-block;background:var(--red);color:#fff;font-weight:800;padding:.9rem 1.8rem;border-radius:4px;text-decoration:none;font-size:1.05rem}
+  .btn-r:hover{background:var(--red-dk)}
+  .btn-w{display:inline-block;margin-left:.7rem;border:1.5px solid #4a4f57;color:#d9dde3;font-weight:600;padding:.9rem 1.5rem;border-radius:4px;text-decoration:none}
+  .crew{background:#fff;color:var(--ink);border-radius:10px;padding:1.9rem;box-shadow:0 20px 44px rgba(0,0,0,.35)}
+  .crew h3{font-size:1rem;letter-spacing:2px;color:var(--red);text-transform:uppercase;margin-bottom:1rem}
+  .crew .member{display:flex;align-items:center;gap:.9rem;padding:.55rem 0;border-bottom:1px solid var(--line);font-size:.95rem}
+  .crew .member:last-child{border:none}
+  .crew .av{width:38px;height:38px;border-radius:50%;background:linear-gradient(140deg,var(--char),var(--char2));color:#fff;font-weight:800;display:flex;align-items:center;justify-content:center;font-size:.9rem}
+  .crew .member span{color:var(--mut);font-size:.83rem;display:block}
+
+  section{padding:4.4rem 1.5rem}
+  .wrap{max-width:1020px;margin:0 auto}
+  .tagline{color:var(--red);font-weight:800;letter-spacing:2.5px;text-transform:uppercase;font-size:.78rem;display:block;margin-bottom:.5rem}
+  h2.sec{font-size:2.1rem;font-weight:900;margin-bottom:.5rem}
+  p.sub{color:var(--mut);max-width:580px;margin-bottom:2.2rem}
+
+  .grid3{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:1.1rem}
+  .card{background:#fff;border-radius:8px;padding:1.7rem;border-top:4px solid transparent;transition:.18s;box-shadow:0 3px 10px rgba(30,33,38,.06)}
+  .card:hover{border-top-color:var(--red);transform:translateY(-3px);box-shadow:0 12px 24px rgba(30,33,38,.12)}
+  .card .em{font-size:1.7rem}
+  .card h3{margin:.6rem 0 .3rem;font-size:1.05rem}
+  .card p{font-size:.9rem;color:var(--mut)}
+
+  .trust{background:var(--char);color:#fff}
+  .trust h2.sec{color:#fff}
+  .trust .stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:1rem;margin-top:2rem}
+  .trust .st{background:var(--char2);border-radius:8px;padding:1.6rem;text-align:center;border-bottom:3px solid var(--red)}
+  .trust .st b{font-size:2rem;display:block;color:#fff}
+  .trust .st span{color:#aab1bb;font-size:.88rem}
+
+  .rev-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:1.2rem}
+  .rev{background:#fff;border-radius:8px;padding:1.7rem;box-shadow:0 3px 10px rgba(30,33,38,.06);border-left:4px solid var(--red)}
+  .rev .stars{color:#f5a623;letter-spacing:2px;margin-bottom:.6rem}
+  .rev p{font-size:.94rem;color:#454a52;font-style:italic}
+  .rev footer{margin-top:.9rem;font-size:.85rem;font-weight:700;color:var(--mut)}
+
+  .visit{display:grid;grid-template-columns:1fr 1fr;gap:2.2rem}
+  @media(max-width:820px){.visit{grid-template-columns:1fr}}
+  .vcard{background:#fff;border-radius:8px;padding:1.8rem;box-shadow:0 3px 10px rgba(30,33,38,.06)}
+  .vrow{display:flex;gap:1rem;padding:.68rem 0;border-bottom:1px solid var(--line);font-size:.96rem}
+  .vrow:last-child{border:none}
+  .vrow .l{min-width:90px;font-weight:800;color:var(--red)}
+  iframe.map{width:100%;height:340px;border:0;border-radius:8px;box-shadow:0 3px 10px rgba(30,33,38,.1)}
+
+  .cta{background:linear-gradient(100deg,var(--red),var(--red-dk));color:#fff;text-align:center}
+  .cta h2{font-size:2rem;font-weight:900}
+  .cta p{margin:.5rem 0 1.5rem;color:#ffd9d5}
+  .cta a{background:var(--char);color:#fff;padding:.9rem 2rem;border-radius:4px;font-weight:800;text-decoration:none;font-size:1.06rem}
+
+  footer.site{background:var(--char);color:#8a919b;text-align:center;padding:2.2rem;font-size:.85rem}
+  footer.site b{color:#fff}
+</style>
+
+<meta name="robots" content="noindex, nofollow, noarchive">
+<style>
+  .bl-watermark{position:fixed;inset:-50%;z-index:9998;pointer-events:none;
+    background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='420' height='300'><text x='0' y='150' font-family='Arial' font-size='30' font-weight='bold' fill='rgba(120,120,120,0.16)' transform='rotate(-27 210 150)'>DEMO PREVIEW — BRICKLIGHT STUDIO</text></svg>");
+    background-repeat:repeat}
+  .bl-banner{position:fixed;left:0;right:0;bottom:0;z-index:9999;background:#111;color:#fff;
+    font-family:'Segoe UI',system-ui,sans-serif;font-size:.9rem;padding:.7rem 1rem;text-align:center;
+    box-shadow:0 -4px 18px rgba(0,0,0,.35)}
+  .bl-banner b{color:#f5c26b}
+  body{user-select:none;-webkit-user-select:none}
+  .bl-expired{position:fixed;inset:0;z-index:10000;background:rgba(12,12,14,.96);color:#fff;
+    display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;
+    font-family:'Segoe UI',system-ui,sans-serif;padding:2rem}
+  .bl-expired h1{font-size:1.6rem;margin-bottom:.6rem}
+  .bl-expired p{color:#aaa;max-width:420px}
+</style>
+
+</head>
+<body>
+
+<div class="top">
+  <div>570 Robert M Grissom Pkwy, Myrtle Beach, SC</div>
+  <div>Mon–Fri 8 AM–5 PM · <b>⭐ 5.0 — every review, five stars</b></div>
+</div>
+
+<nav>
+  <div class="logo">C.A.R.S. <span>INC</span><small>COMPLETE AUTO REPAIR SERVICE</small></div>
+  <ul>
+    <li><a href="#services">Services</a></li>
+    <li><a href="#trust">Track Record</a></li>
+    <li><a href="#reviews">Reviews</a></li>
+    <li><a href="#visit">Visit</a></li>
+  </ul>
+  <a class="call" href="tel:+18432327800">📞 (843) 232-7800</a>
+</nav>
+
+<header class="hero">
+  <div class="hero-in">
+    <div>
+      <span class="flag">5.0★ RATED — 139 REVIEWS, ZERO EXCEPTIONS</span>
+      <h1>When it's serious, Myrtle Beach tows it <em>here</em>.</h1>
+      <p>Transmissions, sensors, electrical gremlins, European imports — the jobs that scare other shops are the ones our customers rave about.</p>
+      <a class="btn-r" href="tel:+18432327800">Call the Shop</a>
+      <a class="btn-w" href="#services">What we fix</a>
+    </div>
+    <div class="crew">
+      <h3>Ask for the crew</h3>
+      <div class="member"><div class="av">C</div><div><b>Chris</b><span>Customers stay 7-8 years — and counting</span></div></div>
+      <div class="member"><div class="av">F</div><div><b>Freddy</b><span>"Absolutely wonderful" — actual review</span></div></div>
+      <div class="member"><div class="av">J</div><div><b>Joe</b><span>Straight answers, clear pricing</span></div></div>
+    </div>
+  </div>
+</header>
+
+<section id="services">
+  <div class="wrap">
+    <span class="tagline">Full service</span>
+    <h2 class="sec">Complete Auto Repair Service</h2>
+    <p class="sub">It's literally our name. From check-engine lights to transmissions — domestic, Asian and European.</p>
+    <div class="grid3">
+      <div class="card"><span class="em">⚙️</span><h3>Transmission Work</h3><p>Leaks, slips and shutdowns — including the jobs that save an Audi S5's weekend.</p></div>
+      <div class="card"><span class="em">💡</span><h3>Sensors &amp; Electrical</h3><p>Modern cars throw codes. We find the real fault, not the parts-cannon guess.</p></div>
+      <div class="card"><span class="em">🇩🇪</span><h3>European &amp; Import</h3><p>Audi, BMW, Mercedes and more — dealer-level care without dealer-level invoices.</p></div>
+      <div class="card"><span class="em">🛑</span><h3>Brakes &amp; Suspension</h3><p>Stop straight, ride smooth. Inspected honestly, fixed fast.</p></div>
+      <div class="card"><span class="em">🚙</span><h3>Buying a used car?</h3><p>Chris has spent an hour+ helping customers vet cars before they buy. Ask.</p></div>
+      <div class="card"><span class="em">🔧</span><h3>General Repair</h3><p>Oil, belts, cooling, tune-ups — the maintenance that prevents the big bills.</p></div>
+    </div>
+  </div>
+</section>
+
+<section class="trust" id="trust">
+  <div class="wrap">
+    <span class="tagline">Track record</span>
+    <h2 class="sec">The rating that doesn't happen by accident</h2>
+    <div class="stats">
+      <div class="st"><b>5.0★</b><span>139 Google reviews — all five stars</span></div>
+      <div class="st"><b>7-8 yrs</b><span>how long customers stay with Chris</span></div>
+      <div class="st"><b>Same-week</b><span>even transmission jobs move fast</span></div>
+      <div class="st"><b>0</b><span>pressure. Quotes first, decisions yours</span></div>
+    </div>
+  </div>
+</section>
+
+<section id="reviews">
+  <div class="wrap">
+    <span class="tagline">Reviews</span>
+    <h2 class="sec">Every single one, five stars</h2>
+    <p class="sub">From Google — unedited:</p>
+    <div class="rev-grid">
+      <div class="rev"><div class="stars">★★★★★</div><p>"I've been going to Chris for 7-8 years now. Super reliable and great prices. When I was looking for a newer car, he took over an hour of his time just to help."</p><footer>— Google review</footer></div>
+      <div class="rev"><div class="stars">★★★★★</div><p>"My daughter's car needed a sensor repair. Chris, Freddy, Chris &amp; Joe were absolutely wonderful."</p><footer>— Google review</footer></div>
+      <div class="rev"><div class="stars">★★★★★</div><p>"Had my Audi S5 towed there after transmission fluid leaked and the car shut down. Honest, knowledgeable, friendly, clear, affordable, fast. This is my new go-to repair shop."</p><footer>— Google review</footer></div>
+    </div>
+  </div>
+</section>
+
+<section id="visit" style="background:#fff">
+  <div class="wrap">
+    <span class="tagline">Visit</span>
+    <h2 class="sec">Easy to find, easy to deal with</h2>
+    <div class="visit" style="margin-top:1.8rem">
+      <div class="vcard">
+        <div class="vrow"><span class="l">Address</span><span>570 Robert M Grissom Pkwy, Myrtle Beach, SC 29577</span></div>
+        <div class="vrow"><span class="l">Phone</span><span><a href="tel:+18432327800"><b>(843) 232-7800</b></a></span></div>
+        <div class="vrow"><span class="l">Hours</span><span>Mon–Fri 8:00 AM – 5:00 PM · Sat–Sun Closed</span></div>
+        <div class="vrow"><span class="l">Towing in?</span><span>Call ahead — we'll be ready for the drop-off</span></div>
+      </div>
+      <iframe class="map" loading="lazy" title="Map to CARS Inc"
+        src="https://maps.google.com/maps?q=CARS%20Inc%2C%20570%20Robert%20M%20Grissom%20Pkwy%2C%20Myrtle%20Beach%2C%20SC&output=embed"></iframe>
+    </div>
+  </div>
+</section>
+
+<section class="cta">
+  <div class="wrap">
+    <h2>Weird noise? Warning light? Shut-down?</h2>
+    <p>Call now — honest answer first, wrench second.</p>
+    <a href="tel:+18432327800">📞 (843) 232-7800</a>
+  </div>
+</section>
+
+<footer class="site">
+  <b>C.A.R.S. Inc — Complete Auto Repair Service</b> · 570 Robert M Grissom Pkwy, Myrtle Beach, SC 29577 · (843) 232-7800
+</footer>
+
+
+<div class="bl-watermark" aria-hidden="true"></div>
+<div class="bl-banner">✨ This is a <b>free preview</b> built for <b>C.A.R.S. Inc</b> by <b>Bricklight Studio</b> — it is not live yet. Like it? It can be yours this week.</div>
+<script>
+(function(){
+  var EXP = new Date('2026-09-30T23:59:59');
+  if (new Date() > EXP) {
+    var d = document.createElement('div'); d.className='bl-expired';
+    d.innerHTML = '<h1>⏳ This preview has expired</h1><p>The demo window for this design has closed. Contact Bricklight Studio to reactivate it or make it live.</p>';
+    document.body.appendChild(d);
+  }
+  ['contextmenu','selectstart','copy','cut','dragstart'].forEach(function(ev){
+    document.addEventListener(ev, function(e){ e.preventDefault(); }, {capture:true});
+  });
+  document.addEventListener('keydown', function(e){
+    var k = e.key.toLowerCase();
+    if ((e.ctrlKey || e.metaKey) && ['s','u','p','a','c'].indexOf(k) !== -1) { e.preventDefault(); }
+    if (e.key === 'F12') { e.preventDefault(); }
+  }, {capture:true});
+})();
+</script>
+
+</body>
+</html>

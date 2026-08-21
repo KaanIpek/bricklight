@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Cuttin' Up Barber Shop &amp; Salon — Cuts, Fades &amp; Nails in Myrtle Beach, SC</title>
+<meta name="description" content="Barber shop and salon in Myrtle Beach, SC. Fades, tapers, kids' cuts, women's styling and nail services under one roof. Call (843) 712-2426.">
+<style>
+  :root{
+    --blk:#101010; --blk2:#1b1b1b; --gold:#c9a24b; --gold-lt:#e6c87e;
+    --cream:#f6f1e7; --ink:#181410; --mut:#7a7265; --line:#e4dccb;
+  }
+  *{margin:0;padding:0;box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{font-family:'Segoe UI',system-ui,sans-serif;background:var(--cream);color:var(--ink);line-height:1.6}
+  a{color:inherit}
+  .serif{font-family:Georgia,'Times New Roman',serif}
+
+  nav{position:sticky;top:0;z-index:60;background:var(--blk);color:#fff;display:flex;align-items:center;justify-content:space-between;padding:.85rem 1.5rem;border-bottom:2px solid var(--gold)}
+  .logo{font-family:Georgia,serif;font-size:1.25rem;letter-spacing:.5px}
+  .logo b{color:var(--gold)}
+  nav ul{display:flex;gap:1.4rem;list-style:none;font-size:.9rem;font-weight:600;letter-spacing:.5px}
+  nav ul a{text-decoration:none;color:#ddd}
+  nav ul a:hover{color:var(--gold)}
+  .book{background:var(--gold);color:var(--blk);padding:.5rem 1.2rem;border-radius:3px;font-weight:800;text-decoration:none;white-space:nowrap}
+  @media(max-width:780px){nav ul{display:none}}
+
+  header.hero{position:relative;background:
+     radial-gradient(700px 340px at 15% 10%, rgba(201,162,75,.16), transparent 55%),
+     linear-gradient(180deg,#101010,#1b1b1b);
+     color:#fff;padding:5.5rem 1.5rem;overflow:hidden}
+  .pole{position:absolute;right:6%;top:0;bottom:0;width:26px;
+     background:repeating-linear-gradient(-45deg,#b33 0 14px,#fff 14px 28px,#3b6 28px,#345f8f 28px 42px,#fff 42px 56px);opacity:.85;border-radius:0 0 8px 8px}
+  @media(max-width:640px){.pole{display:none}}
+  .hero-in{max-width:980px;margin:0 auto}
+  .est{color:var(--gold);letter-spacing:4px;font-size:.8rem;text-transform:uppercase;margin-bottom:1rem;display:block}
+  .hero h1{font-family:Georgia,serif;font-size:clamp(2.3rem,6vw,4rem);line-height:1.08;max-width:620px}
+  .hero h1 span{color:var(--gold)}
+  .hero p{margin:1.3rem 0 2rem;color:#bdb6a8;max-width:520px;font-size:1.08rem}
+  .hero-cta{display:flex;gap:1rem;flex-wrap:wrap}
+  .btn-g{background:var(--gold);color:var(--blk);font-weight:800;padding:.9rem 1.8rem;border-radius:3px;text-decoration:none}
+  .btn-o{border:1px solid #4a4436;color:var(--gold-lt);padding:.9rem 1.6rem;border-radius:3px;text-decoration:none;font-weight:600}
+  .badges{display:flex;gap:1.6rem;margin-top:2.6rem;flex-wrap:wrap;color:#9a9384;font-size:.9rem}
+  .badges b{color:var(--gold);font-size:1.2rem;display:block}
+
+  section{padding:4.5rem 1.5rem}
+  .wrap{max-width:980px;margin:0 auto}
+  .eyebrow{color:#a08432;letter-spacing:3px;text-transform:uppercase;font-size:.78rem;font-weight:700;display:block;margin-bottom:.5rem}
+  h2.sec{font-family:Georgia,serif;font-size:2.2rem;margin-bottom:.5rem}
+  p.sub{color:var(--mut);max-width:560px;margin-bottom:2.2rem}
+
+  .duo{display:grid;grid-template-columns:1fr 1fr;gap:1.4rem}
+  @media(max-width:760px){.duo{grid-template-columns:1fr}}
+  .side{background:#fff;border:1px solid var(--line);border-top:4px solid var(--gold);padding:2rem;border-radius:4px}
+  .side h3{font-family:Georgia,serif;font-size:1.35rem;margin-bottom:.4rem}
+  .side p.d{color:var(--mut);font-size:.93rem;margin-bottom:1.3rem}
+  .price-row{display:flex;justify-content:space-between;align-items:baseline;padding:.6rem 0;border-bottom:1px dotted var(--line);font-size:.98rem}
+  .price-row:last-child{border:none}
+  .price-row .dots{flex:1;margin:0 .6rem;border-bottom:1px dotted #c9bfa8;transform:translateY(-4px)}
+  .price-row b{color:#a08432}
+  .note-sm{font-size:.8rem;color:#a89e8c;margin-top:1rem}
+
+  .band{background:var(--blk);color:#fff;text-align:center}
+  .band h2.sec{color:#fff}
+  .band .rev-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(270px,1fr));gap:1.2rem;text-align:left;margin-top:2rem}
+  .rev{background:var(--blk2);border:1px solid #2c2a24;border-radius:4px;padding:1.6rem}
+  .rev .stars{color:var(--gold);letter-spacing:3px;margin-bottom:.7rem}
+  .rev p{font-style:italic;color:#cfc9bb;font-size:.95rem}
+  .rev footer{margin-top:.9rem;color:#8a8374;font-size:.85rem}
+
+  .promise{display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:1.1rem}
+  .pr{background:#fff;border:1px solid var(--line);border-radius:4px;padding:1.5rem;text-align:center}
+  .pr .em{font-size:1.9rem;display:block;margin-bottom:.5rem}
+  .pr b{display:block;margin-bottom:.3rem}
+  .pr span{font-size:.88rem;color:var(--mut)}
+
+  .visit-grid{display:grid;grid-template-columns:1fr 1fr;gap:2rem}
+  @media(max-width:800px){.visit-grid{grid-template-columns:1fr}}
+  .vcard{background:#fff;border:1px solid var(--line);border-radius:4px;padding:1.7rem}
+  .vrow{display:flex;gap:1rem;padding:.65rem 0;border-bottom:1px solid var(--line);font-size:.96rem}
+  .vrow:last-child{border:none}
+  .vrow .l{min-width:88px;font-weight:700;color:#a08432}
+  iframe.map{width:100%;height:330px;border:0;border-radius:4px;filter:sepia(.15)}
+
+  .cta{background:linear-gradient(120deg,var(--gold),#b08a35);text-align:center;color:var(--blk)}
+  .cta h2{font-family:Georgia,serif;font-size:2rem}
+  .cta p{margin:.5rem 0 1.4rem;color:#4c3c14}
+  .cta a{background:var(--blk);color:var(--gold-lt);padding:.85rem 2rem;border-radius:3px;font-weight:800;text-decoration:none}
+
+  footer.site{background:var(--blk);color:#8a8374;text-align:center;padding:2rem;font-size:.85rem}
+  footer.site b{color:var(--gold)}
+</style>
+
+<meta name="robots" content="noindex, nofollow, noarchive">
+<style>
+  .bl-watermark{position:fixed;inset:-50%;z-index:9998;pointer-events:none;
+    background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='420' height='300'><text x='0' y='150' font-family='Arial' font-size='30' font-weight='bold' fill='rgba(120,120,120,0.16)' transform='rotate(-27 210 150)'>DEMO PREVIEW — BRICKLIGHT STUDIO</text></svg>");
+    background-repeat:repeat}
+  .bl-banner{position:fixed;left:0;right:0;bottom:0;z-index:9999;background:#111;color:#fff;
+    font-family:'Segoe UI',system-ui,sans-serif;font-size:.9rem;padding:.7rem 1rem;text-align:center;
+    box-shadow:0 -4px 18px rgba(0,0,0,.35)}
+  .bl-banner b{color:#f5c26b}
+  body{user-select:none;-webkit-user-select:none}
+  .bl-expired{position:fixed;inset:0;z-index:10000;background:rgba(12,12,14,.96);color:#fff;
+    display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;
+    font-family:'Segoe UI',system-ui,sans-serif;padding:2rem}
+  .bl-expired h1{font-size:1.6rem;margin-bottom:.6rem}
+  .bl-expired p{color:#aaa;max-width:420px}
+</style>
+
+</head>
+<body>
+
+<nav>
+  <div class="logo"><b>CUTTIN' UP</b> Barber Shop &amp; Salon</div>
+  <ul>
+    <li><a href="#services">Services &amp; Prices</a></li>
+    <li><a href="#reviews">Reviews</a></li>
+    <li><a href="#promise">The Shop</a></li>
+    <li><a href="#visit">Visit</a></li>
+  </ul>
+  <a class="book" href="tel:+18437122426">Book by phone</a>
+</nav>
+
+<header class="hero">
+  <div class="pole"></div>
+  <div class="hero-in">
+    <span class="est">Myrtle Beach · Barber & Salon</span>
+    <h1>Fresh cuts.<br><span>Full service.</span><br>One chair away.</h1>
+    <p>Fades, tapers, kids' cuts, women's styling and nail care — a real neighborhood shop where the whole family gets looked after.</p>
+    <div class="hero-cta">
+      <a class="btn-g" href="tel:+18437122426">📞 (843) 712-2426</a>
+      <a class="btn-o" href="#services">See services &amp; prices</a>
+    </div>
+    <div class="badges">
+      <div><b>4.6★</b>250+ Google reviews</div>
+      <div><b>Barber + Salon</b>hair &amp; nails, one roof</div>
+      <div><b>Walk-ins</b>welcome when chairs are free</div>
+    </div>
+  </div>
+</header>
+
+<section id="services">
+  <div class="wrap">
+    <span class="eyebrow">Services</span>
+    <h2 class="sec">Two sides of the shop</h2>
+    <p class="sub">Barbering on one side, salon services on the other. Prices confirmed when you book — ask about kids' and seniors' rates.</p>
+    <div class="duo">
+      <div class="side">
+        <h3>✂️ The Barber Side</h3>
+        <p class="d">Classic and modern cuts, executed clean.</p>
+        <div class="price-row"><span>Haircut</span><span class="dots"></span><b>from $25</b></div>
+        <div class="price-row"><span>Fade / Taper</span><span class="dots"></span><b>from $30</b></div>
+        <div class="price-row"><span>Cut + Beard</span><span class="dots"></span><b>from $40</b></div>
+        <div class="price-row"><span>Kids' Cut</span><span class="dots"></span><b>from $20</b></div>
+        <div class="price-row"><span>Line-up / Edge</span><span class="dots"></span><b>from $15</b></div>
+        <p class="note-sm">Sample menu — call the shop to confirm today's prices.</p>
+      </div>
+      <div class="side">
+        <h3>💅 The Salon Side</h3>
+        <p class="d">Styling and nail care by appointment.</p>
+        <div class="price-row"><span>Women's Cut &amp; Style</span><span class="dots"></span><b>ask</b></div>
+        <div class="price-row"><span>Manicure</span><span class="dots"></span><b>ask</b></div>
+        <div class="price-row"><span>Full Nail Set</span><span class="dots"></span><b>ask</b></div>
+        <div class="price-row"><span>Polish / Design</span><span class="dots"></span><b>ask</b></div>
+        <div class="price-row"><span>Special occasion styling</span><span class="dots"></span><b>ask</b></div>
+        <p class="note-sm">Ask for Dasia's chair — her first-timers come back.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="band" id="reviews">
+  <div class="wrap">
+    <span class="eyebrow" style="color:var(--gold)">Word on the street</span>
+    <h2 class="sec">The reviews tell it</h2>
+    <div class="rev-grid">
+      <div class="rev"><div class="stars">★★★★★</div><p>"I had a wonderful experience with Dasia doing my nails for the first time. I was very pleased with her work. I am looking forward to returning to have more services done."</p><footer>— Google review</footer></div>
+      <div class="rev"><div class="stars">★★★★★</div><p>"My son's hair was butchered elsewhere. John was tagged in my post looking for help — he personally messaged me and told me to come in so he could fix it."</p><footer>— Google review</footer></div>
+      <div class="rev"><div class="stars">★★★★★</div><p>The shop answers its reviews, fixes other shops' mistakes, and keeps the whole family in one appointment.</p><footer>— What 250+ reviews add up to</footer></div>
+    </div>
+  </div>
+</section>
+
+<section id="promise">
+  <div class="wrap">
+    <span class="eyebrow">The shop</span>
+    <h2 class="sec">Why people switch to Cuttin' Up</h2>
+    <p class="sub">A cut is ten minutes of work and a week of walking around with it. We act like we know that.</p>
+    <div class="promise">
+      <div class="pr"><span class="em">👨‍👩‍👧‍👦</span><b>Whole-family shop</b><span>Dad's fade, kid's first cut, mom's nails — one stop.</span></div>
+      <div class="pr"><span class="em">🛠️</span><b>We fix bad cuts</b><span>Botched somewhere else? Come in. We've done it before.</span></div>
+      <div class="pr"><span class="em">💬</span><b>An owner who listens</b><span>John answers reviews and messages personally.</span></div>
+      <div class="pr"><span class="em">📍</span><b>Right in town</b><span>3rd Ave S — minutes from anywhere in Myrtle Beach.</span></div>
+    </div>
+  </div>
+</section>
+
+<section id="visit" style="background:#fff">
+  <div class="wrap">
+    <span class="eyebrow">Visit</span>
+    <h2 class="sec">Pull up a chair</h2>
+    <div class="visit-grid" style="margin-top:1.6rem">
+      <div class="vcard">
+        <div class="vrow"><span class="l">Address</span><span>1102 3rd Ave S, Myrtle Beach, SC 29577</span></div>
+        <div class="vrow"><span class="l">Phone</span><span><a href="tel:+18437122426"><b>(843) 712-2426</b></a></span></div>
+        <div class="vrow"><span class="l">Booking</span><span>Call ahead to lock your chair — walk-ins taken when free</span></div>
+        <div class="vrow"><span class="l">Rating</span><span>⭐ 4.6 · 250+ Google reviews</span></div>
+      </div>
+      <iframe class="map" loading="lazy" title="Map to Cuttin' Up Barber Shop"
+        src="https://maps.google.com/maps?q=Cuttin%20Up%20Barber%20Shop%20%26%20Salon%2C%201102%203rd%20Ave%20S%2C%20Myrtle%20Beach%2C%20SC&output=embed"></iframe>
+    </div>
+  </div>
+</section>
+
+<section class="cta">
+  <div class="wrap">
+    <h2>Look sharp by this afternoon.</h2>
+    <p>One call books the chair. Bring the kids.</p>
+    <a href="tel:+18437122426">📞 (843) 712-2426</a>
+  </div>
+</section>
+
+<footer class="site">
+  <b>Cuttin' Up Barber Shop &amp; Salon</b> · 1102 3rd Ave S, Myrtle Beach, SC 29577 · (843) 712-2426
+</footer>
+
+
+<div class="bl-watermark" aria-hidden="true"></div>
+<div class="bl-banner">✨ This is a <b>free preview</b> built for <b>Cuttin' Up Barber Shop & Salon</b> by <b>Bricklight Studio</b> — it is not live yet. Like it? It can be yours this week.</div>
+<script>
+(function(){
+  var EXP = new Date('2026-09-30T23:59:59');
+  if (new Date() > EXP) {
+    var d = document.createElement('div'); d.className='bl-expired';
+    d.innerHTML = '<h1>⏳ This preview has expired</h1><p>The demo window for this design has closed. Contact Bricklight Studio to reactivate it or make it live.</p>';
+    document.body.appendChild(d);
+  }
+  ['contextmenu','selectstart','copy','cut','dragstart'].forEach(function(ev){
+    document.addEventListener(ev, function(e){ e.preventDefault(); }, {capture:true});
+  });
+  document.addEventListener('keydown', function(e){
+    var k = e.key.toLowerCase();
+    if ((e.ctrlKey || e.metaKey) && ['s','u','p','a','c'].indexOf(k) !== -1) { e.preventDefault(); }
+    if (e.key === 'F12') { e.preventDefault(); }
+  }, {capture:true});
+})();
+</script>
+
+</body>
+</html>

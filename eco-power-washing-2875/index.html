@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Eco Power Washing — House &amp; Driveway Pressure Washing in Myrtle Beach, SC</title>
+<meta name="description" content="Five-star pressure washing in Myrtle Beach, SC. House washes, driveways, rust stain removal, concrete cleaning. 175+ perfect reviews. Free quote: (843) 333-9544.">
+<style>
+  :root{
+    --deep:#0b3550; --deep2:#0f4468; --green:#3fb950; --green-dk:#2e9440;
+    --sky:#eaf4fb; --ink:#12303f; --mut:#5b7285; --line:#d7e6f0; --white:#fff;
+  }
+  *{margin:0;padding:0;box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{font-family:'Segoe UI',system-ui,sans-serif;background:var(--white);color:var(--ink);line-height:1.6}
+  a{color:inherit}
+
+  nav{position:sticky;top:0;z-index:60;background:rgba(255,255,255,.96);backdrop-filter:blur(6px);border-bottom:1px solid var(--line);display:flex;align-items:center;justify-content:space-between;padding:.85rem 1.5rem}
+  .logo{font-weight:800;font-size:1.12rem;color:var(--deep)}
+  .logo .leaf{color:var(--green)}
+  nav ul{display:flex;gap:1.4rem;list-style:none;font-size:.92rem;font-weight:600}
+  nav ul a{text-decoration:none;color:#41576b}
+  nav ul a:hover{color:var(--green-dk)}
+  .quote-btn{background:var(--green);color:#fff;font-weight:800;padding:.6rem 1.2rem;border-radius:8px;text-decoration:none;white-space:nowrap;box-shadow:0 2px 0 var(--green-dk)}
+  @media(max-width:780px){nav ul{display:none}}
+
+  header.hero{background:linear-gradient(165deg,var(--deep) 0%,var(--deep2) 60%,#12557f 100%);color:#fff;padding:5rem 1.5rem 7rem;position:relative;overflow:hidden}
+  .drops{position:absolute;inset:0;background-image:radial-gradient(rgba(255,255,255,.10) 2px,transparent 2.6px);background-size:46px 46px;transform:skewY(-8deg) translateY(-30px)}
+  .hero-in{max-width:1020px;margin:0 auto;position:relative;display:grid;grid-template-columns:1.15fr .85fr;gap:3rem;align-items:center}
+  @media(max-width:860px){.hero-in{grid-template-columns:1fr}}
+  .pill{display:inline-flex;align-items:center;gap:.5rem;background:rgba(63,185,80,.16);border:1px solid rgba(63,185,80,.55);border-radius:99px;padding:.35rem 1rem;font-size:.83rem;font-weight:700;color:#a9e8b2;margin-bottom:1.2rem}
+  .hero h1{font-size:clamp(2.1rem,5vw,3.3rem);line-height:1.12;font-weight:800}
+  .hero h1 span{color:var(--green);}
+  .hero p{margin:1.2rem 0 2rem;color:#bcd4e4;max-width:500px;font-size:1.07rem}
+  .btn-main{display:inline-block;background:var(--green);color:#fff;font-weight:800;padding:.95rem 1.9rem;border-radius:10px;text-decoration:none;font-size:1.08rem;box-shadow:0 3px 0 var(--green-dk)}
+  .btn-sub{display:inline-block;margin-left:.8rem;color:#cfe4f2;text-decoration:none;font-weight:600;padding:.95rem .5rem}
+  .btn-sub:hover{color:var(--green)}
+
+  .shine-card{background:linear-gradient(160deg,rgba(255,255,255,.10),rgba(255,255,255,.04));border:1px solid rgba(255,255,255,.22);border-radius:18px;padding:2rem;text-align:center;backdrop-filter:blur(3px)}
+  .shine-card .score{font-size:4.2rem;font-weight:900;color:var(--green);line-height:1}
+  .shine-card .stars{color:#ffd76a;font-size:1.4rem;letter-spacing:3px;margin:.4rem 0}
+  .shine-card p{color:#bcd4e4;font-size:.93rem}
+  .shine-card .perfect{margin-top:1rem;background:rgba(63,185,80,.18);border-radius:8px;padding:.6rem;font-size:.85rem;color:#a9e8b2;font-weight:700}
+
+  .wave{margin-top:-4.2rem;position:relative;z-index:3}
+  .wave svg{display:block;width:100%;height:80px}
+
+  section{padding:4.2rem 1.5rem}
+  .wrap{max-width:1020px;margin:0 auto}
+  .eyebrow{color:var(--green-dk);letter-spacing:2.5px;text-transform:uppercase;font-size:.78rem;font-weight:800;display:block;margin-bottom:.5rem}
+  h2.sec{font-size:2.1rem;font-weight:800;margin-bottom:.5rem;color:var(--deep)}
+  p.sub{color:var(--mut);max-width:580px;margin-bottom:2.2rem}
+
+  .svc-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:1.1rem}
+  .svc{background:var(--sky);border-radius:14px;padding:1.6rem;position:relative;overflow:hidden;transition:.18s}
+  .svc:hover{transform:translateY(-4px);box-shadow:0 12px 26px rgba(11,53,80,.14)}
+  .svc .em{font-size:1.8rem}
+  .svc h3{margin:.6rem 0 .3rem;font-size:1.06rem;color:var(--deep)}
+  .svc p{font-size:.9rem;color:var(--mut)}
+  .svc::after{content:"";position:absolute;right:-30px;bottom:-30px;width:90px;height:90px;border-radius:50%;background:rgba(63,185,80,.12)}
+
+  .ba{background:var(--deep);color:#fff}
+  .ba h2.sec{color:#fff}
+  .ba p.sub{color:#9fc0d6}
+  .ba-strip{display:grid;grid-template-columns:1fr 1fr;border-radius:16px;overflow:hidden;border:1px solid #1d5680}
+  @media(max-width:700px){.ba-strip{grid-template-columns:1fr}}
+  .ba-half{padding:2.6rem 2rem;text-align:center}
+  .ba-half.before{background:repeating-linear-gradient(45deg,#4a4a42 0 12px,#3d3d36 12px 24px)}
+  .ba-half.after{background:linear-gradient(150deg,#e8f4fb,#cfe9f7);color:var(--deep)}
+  .ba-half .tag{display:inline-block;border-radius:99px;padding:.3rem 1rem;font-weight:800;font-size:.8rem;letter-spacing:2px;margin-bottom:.9rem}
+  .before .tag{background:rgba(0,0,0,.4);color:#cfc9b8}
+  .after .tag{background:var(--green);color:#fff}
+  .ba-half h3{font-size:1.3rem;margin-bottom:.4rem}
+  .ba-half p{font-size:.92rem;opacity:.85}
+  .ba-note{text-align:center;margin-top:1.4rem;color:#9fc0d6;font-size:.9rem}
+
+  .rev-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:1.2rem}
+  .rev{background:#fff;border:1px solid var(--line);border-radius:14px;padding:1.6rem;box-shadow:0 6px 18px rgba(11,53,80,.06)}
+  .rev .stars{color:#f5a623;letter-spacing:2px;margin-bottom:.6rem}
+  .rev p{font-size:.94rem;color:#3d5568;font-style:italic}
+  .rev footer{margin-top:.9rem;font-size:.85rem;font-weight:700;color:var(--mut)}
+
+  .steps{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:1.1rem;counter-reset:st}
+  .step{background:#fff;border:1.5px dashed var(--line);border-radius:14px;padding:1.6rem;position:relative}
+  .step::before{counter-increment:st;content:counter(st);position:absolute;top:-16px;left:1.2rem;width:34px;height:34px;border-radius:50%;background:var(--green);color:#fff;font-weight:900;display:flex;align-items:center;justify-content:center;box-shadow:0 2px 0 var(--green-dk)}
+  .step b{display:block;margin-bottom:.3rem;color:var(--deep)}
+  .step span{font-size:.9rem;color:var(--mut)}
+
+  .cta{background:linear-gradient(140deg,var(--green),var(--green-dk));text-align:center;color:#fff}
+  .cta h2{font-size:2rem;font-weight:900}
+  .cta p{margin:.5rem 0 1.5rem;color:#eafbe9}
+  .cta a{background:var(--deep);color:#fff;padding:.9rem 2rem;border-radius:10px;font-weight:800;text-decoration:none;font-size:1.08rem}
+
+  footer.site{background:var(--deep);color:#87a7bd;text-align:center;padding:2.2rem;font-size:.85rem}
+  footer.site b{color:#fff}
+</style>
+
+<meta name="robots" content="noindex, nofollow, noarchive">
+<style>
+  .bl-watermark{position:fixed;inset:-50%;z-index:9998;pointer-events:none;
+    background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='420' height='300'><text x='0' y='150' font-family='Arial' font-size='30' font-weight='bold' fill='rgba(120,120,120,0.16)' transform='rotate(-27 210 150)'>DEMO PREVIEW — BRICKLIGHT STUDIO</text></svg>");
+    background-repeat:repeat}
+  .bl-banner{position:fixed;left:0;right:0;bottom:0;z-index:9999;background:#111;color:#fff;
+    font-family:'Segoe UI',system-ui,sans-serif;font-size:.9rem;padding:.7rem 1rem;text-align:center;
+    box-shadow:0 -4px 18px rgba(0,0,0,.35)}
+  .bl-banner b{color:#f5c26b}
+  body{user-select:none;-webkit-user-select:none}
+  .bl-expired{position:fixed;inset:0;z-index:10000;background:rgba(12,12,14,.96);color:#fff;
+    display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;
+    font-family:'Segoe UI',system-ui,sans-serif;padding:2rem}
+  .bl-expired h1{font-size:1.6rem;margin-bottom:.6rem}
+  .bl-expired p{color:#aaa;max-width:420px}
+</style>
+
+</head>
+<body>
+
+<nav>
+  <div class="logo">💧 ECO <span class="leaf">POWER</span> WASHING</div>
+  <ul>
+    <li><a href="#services">Services</a></li>
+    <li><a href="#results">Results</a></li>
+    <li><a href="#reviews">Reviews</a></li>
+    <li><a href="#how">How It Works</a></li>
+  </ul>
+  <a class="quote-btn" href="tel:+18433339544">Free Quote ☎</a>
+</nav>
+
+<header class="hero">
+  <div class="drops"></div>
+  <div class="hero-in">
+    <div>
+      <span class="pill">● Serving Myrtle Beach &amp; Carolina Forest</span>
+      <h1>Your house hasn't looked <span>this good</span> since move-in day.</h1>
+      <p>House washes, driveways, rust stains, decks and concrete — cleaned by the husband-and-wife team behind 175+ perfect five-star reviews.</p>
+      <a class="btn-main" href="tel:+18433339544">📞 (843) 333-9544</a>
+      <a class="btn-sub" href="#services">What we clean →</a>
+    </div>
+    <div class="shine-card">
+      <div class="score">5.0</div>
+      <div class="stars">★★★★★</div>
+      <p><b style="color:#fff">175+ Google reviews</b><br>every single one five stars</p>
+      <div class="perfect">A perfect rating is not luck. It's Tommy &amp; Alexis.</div>
+    </div>
+  </div>
+</header>
+
+<section id="services" style="padding-top:5.5rem">
+  <div class="wrap">
+    <span class="eyebrow">Services</span>
+    <h2 class="sec">What we clean</h2>
+    <p class="sub">Soft wash where your home needs gentle. Power where the grime needs muscle.</p>
+    <div class="svc-grid">
+      <div class="svc"><span class="em">🏠</span><h3>House Wash</h3><p>Siding, soffits and gutters — mold, mildew and salt haze gone without damage.</p></div>
+      <div class="svc"><span class="em">🚗</span><h3>Driveways &amp; Concrete</h3><p>Oil, tire marks and years of gray lifted back to bright.</p></div>
+      <div class="svc"><span class="em">🧡</span><h3>Rust Stain Removal</h3><p>Our specialty — rust stains customers thought were permanent, completely out.</p></div>
+      <div class="svc"><span class="em">🪵</span><h3>Decks &amp; Patios</h3><p>Wood and pavers cleaned ready for guests — or for staining season.</p></div>
+      <div class="svc"><span class="em">🏢</span><h3>Commercial</h3><p>Storefronts, walkways and HOA common areas on a schedule that suits you.</p></div>
+      <div class="svc"><span class="em">🌿</span><h3>Eco-conscious</h3><p>The "Eco" is earned — plant-safe process, careful rinsing, no harsh residue.</p></div>
+    </div>
+  </div>
+</section>
+
+<section class="ba" id="results">
+  <div class="wrap">
+    <span class="eyebrow" style="color:var(--green)">Results</span>
+    <h2 class="sec">The before &amp; after moment</h2>
+    <p class="sub">This is where your photos go. One driveway, one afternoon, one very satisfying line down the middle.</p>
+    <div class="ba-strip">
+      <div class="ba-half before"><span class="tag">BEFORE</span><h3>Years of buildup</h3><p>Mold, rust streaks, tire marks, coastal grime.</p></div>
+      <div class="ba-half after"><span class="tag">AFTER</span><h3>Like new again</h3><p>"They got rust stains completely out. House looks sparkling clean."</p></div>
+    </div>
+    <p class="ba-note">📸 Real before/after photos from your jobs slot straight into this section.</p>
+  </div>
+</section>
+
+<section id="reviews" style="background:var(--sky)">
+  <div class="wrap">
+    <span class="eyebrow">Reviews</span>
+    <h2 class="sec">175 jobs. 175 five-star reviews.</h2>
+    <p class="sub">Straight from Google:</p>
+    <div class="rev-grid">
+      <div class="rev"><div class="stars">★★★★★</div><p>"Super pleased with the job Eco Power Wash did today on my home! There were rust stains on the driveway, and they got them completely out. House looks sparkling clean."</p><footer>— Google review</footer></div>
+      <div class="rev"><div class="stars">★★★★★</div><p>"Highly recommend! Tommy and Alexis offer top-notch service and are incredibly professional. They took the time to do the job right."</p><footer>— Google review</footer></div>
+      <div class="rev"><div class="stars">★★★★★</div><p>"This company is first class. Tommy showed up on time, we went over what was to be completed and he went right to work — all my concrete work as well."</p><footer>— Google review</footer></div>
+    </div>
+  </div>
+</section>
+
+<section id="how">
+  <div class="wrap">
+    <span class="eyebrow">How it works</span>
+    <h2 class="sec">Three steps to sparkling</h2>
+    <p class="sub" style="margin-bottom:2.8rem">No site visit needed for most quotes — a quick call does it.</p>
+    <div class="steps">
+      <div class="step"><b>Call or text</b><span>Tell us what needs cleaning — snap a photo if it's easier.</span></div>
+      <div class="step"><b>Get your quote</b><span>A clear price, usually same day. No pressure, no surprises.</span></div>
+      <div class="step"><b>Watch it transform</b><span>We show up on time, protect your plants, and leave it spotless.</span></div>
+    </div>
+  </div>
+</section>
+
+<section class="cta">
+  <div class="wrap">
+    <h2>That driveway isn't cleaning itself.</h2>
+    <p>Free quote from Tommy &amp; Alexis — usually same day.</p>
+    <a href="tel:+18433339544">📞 (843) 333-9544</a>
+  </div>
+</section>
+
+<footer class="site">
+  <b>Eco Power Washing</b> · Myrtle Beach &amp; Carolina Forest, SC · (843) 333-9544<br>
+  House washes · Driveways · Rust removal · Decks · Commercial
+</footer>
+
+
+<div class="bl-watermark" aria-hidden="true"></div>
+<div class="bl-banner">✨ This is a <b>free preview</b> built for <b>Eco Power Washing</b> by <b>Bricklight Studio</b> — it is not live yet. Like it? It can be yours this week.</div>
+<script>
+(function(){
+  var EXP = new Date('2026-09-30T23:59:59');
+  if (new Date() > EXP) {
+    var d = document.createElement('div'); d.className='bl-expired';
+    d.innerHTML = '<h1>⏳ This preview has expired</h1><p>The demo window for this design has closed. Contact Bricklight Studio to reactivate it or make it live.</p>';
+    document.body.appendChild(d);
+  }
+  ['contextmenu','selectstart','copy','cut','dragstart'].forEach(function(ev){
+    document.addEventListener(ev, function(e){ e.preventDefault(); }, {capture:true});
+  });
+  document.addEventListener('keydown', function(e){
+    var k = e.key.toLowerCase();
+    if ((e.ctrlKey || e.metaKey) && ['s','u','p','a','c'].indexOf(k) !== -1) { e.preventDefault(); }
+    if (e.key === 'F12') { e.preventDefault(); }
+  }, {capture:true});
+})();
+</script>
+
+</body>
+</html>
