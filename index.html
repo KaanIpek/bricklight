@@ -118,7 +118,8 @@
 
   /* PRICING */
   .pricing{background:linear-gradient(180deg,#f3f1ec,var(--paper))}
-  .price-grid{display:grid;grid-template-columns:1fr 1fr;gap:1.4rem;max-width:860px}
+  .price-grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:1.2rem;max-width:1080px}
+  @media(max-width:1000px){.price-grid{grid-template-columns:1fr 1fr}}
   @media(max-width:760px){.price-grid{grid-template-columns:1fr}}
   .pcard{background:#fff;border:1.5px solid var(--line);border-radius:18px;padding:2.2rem;position:relative}
   .pcard.hot{border-color:var(--amber);box-shadow:0 18px 40px rgba(245,166,35,.16)}
@@ -260,8 +261,8 @@
 <section class="pricing" id="pricing">
   <div class="wrap">
     <span class="eyebrow">Pricing</span>
-    <h2>Two numbers. No surprises.</h2>
-    <p class="sub">Printed on every offer sheet, same for everyone:</p>
+    <h2>Simple pricing. No surprises.</h2>
+    <p class="sub">Printed on every offer sheet, same for everyone. I can run it for you — or hand you the keys.</p>
     <div class="price-grid">
       <div class="pcard">
         <div class="plabel">1 · Build &amp; Launch</div>
@@ -286,8 +287,19 @@
           <li>Cancel after 12 months — you keep every file</li>
         </ul>
       </div>
+      <div class="pcard">
+        <div class="plabel">or · Own &amp; Self-Host</div>
+        <div class="amount">$1,250 <small>one-time · no monthly</small></div>
+        <ul>
+          <li>Everything in Build &amp; Launch</li>
+          <li>Full site files delivered as a ZIP</li>
+          <li>Plain-English setup guide for any host</li>
+          <li>One free deployment to your hosting</li>
+          <li>30 days of email support, then it's all yours</li>
+        </ul>
+      </div>
     </div>
-    <p class="price-note">No setup fees, no "premium support" tiers, no hostage-taking. If you ever leave, the site goes with you — it was always yours.</p>
+    <p class="price-note">No setup fees, no "premium support" tiers, no hostage-taking. Prefer to host it yourself? Take the files and go — it was always yours.</p>
   </div>
 </section>
 
