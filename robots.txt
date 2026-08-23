@@ -1,0 +1,16 @@
+User-agent: *
+Allow: /$
+Allow: /og.png
+Allow: /favicon.svg
+Disallow: /west-tire-9411/
+Disallow: /west-tire-9411-img/
+Disallow: /affordable-garage-31bc/
+Disallow: /affordable-garage-31bc-img/
+Disallow: /cuttin-up-b6c0/
+Disallow: /cuttin-up-b6c0-img/
+Disallow: /eco-power-washing-2875/
+Disallow: /eco-power-washing-2875-img/
+Disallow: /cars-inc-b499/
+Disallow: /cars-inc-b499-img/
+
+Sitemap: https://kaanipek.github.io/bricklight/sitemap.xml
