@@ -85,15 +85,16 @@ textarea{min-height:74px;resize:vertical}
   <div class="acts">
     <button class="b-view" id="view">👁 View site</button>
     <button class="b-reset" id="reset">Undo all</button>
-    <button class="b-pub" id="publish">📤 Publish</button>
+    <button class="b-pub" id="publish">🚀 Publish — make it live</button>
     <button class="b-save" id="save">💾 Save changes</button>
   </div>
 </div>
 
 <div class="wrap">
   <div class="note">
-    <b>How this works:</b> Save writes your changes to this device instantly — open the site and you'll see them.
-    When you're happy, press <b>Publish</b> and send the file to Kaan (or, on the Hosting &amp; Care plan, it goes live automatically).
+    <b>How this works:</b> <b>Save</b> keeps your changes on this device so you can check them first —
+    open the site and you'll see them. When you're happy, press <b>Publish</b> and they go live for
+    everyone, straight away. Nothing to send to anyone.
   </div>
 
   <!-- BASICS -->
@@ -195,13 +196,7 @@ textarea{min-height:74px;resize:vertical}
   </div>
 
   <div class="pubbox" id="pubbox">
-    <p><b>Copy everything below</b> and send it to Kaan — he'll put it live on the real site. Or download the file.</p>
-    <textarea id="pubjson" readonly></textarea>
-    <div style="margin-top:.7rem;display:flex;gap:.5rem;flex-wrap:wrap">
-      <button class="b-save b-sm" id="copyJson">Copy</button>
-      <button class="b-view b-sm" id="dlJson">Download file</button>
-      <button class="b-view b-sm" id="smsJson">Text Kaan</button>
-    </div>
+    <p id="pubmsg"></p>
   </div>
 </div>
 
@@ -210,7 +205,8 @@ textarea{min-height:74px;resize:vertical}
 <script src="content.js"></script>
 <script>
 (function(){
-  var KEY='sg_content_v1', PIN='2024';           /* PIN degistirilebilir */
+  var KEY='sg_content_v1', PUB='sg_published_v1', PIN='2024';
+  var API='https://bricklight-content.eminetinoco.workers.dev', SITE='southern-grill';
   var $=function(i){return document.getElementById(i)};
   function deep(o){return JSON.parse(JSON.stringify(o))}
   var S = deep(window.SG_DEFAULT);
@@ -398,21 +394,30 @@ textarea{min-height:74px;resize:vertical}
   $('publish').onclick=function(){
     readAll();
     try{ localStorage.setItem(KEY, JSON.stringify(S)); }catch(e){}
-    $('pubjson').value = JSON.stringify(S, null, 1);
+    var btn=$('publish'), old=btn.textContent;
+    btn.disabled=true; btn.textContent='Publishing…';
     $('pubbox').style.display='block';
+    $('pubmsg').innerHTML='Sending your changes to the website…';
+    fetch(API+'/c/'+SITE,{method:'PUT',headers:{'Content-Type':'application/json','X-Edit-Pin':PIN},
+      body:JSON.stringify(S)})
+      .then(function(r){ return r.json().then(function(j){ return {ok:r.ok,j:j}; }); })
+      .then(function(res){
+        btn.disabled=false; btn.textContent=old;
+        if(res.ok){
+          try{ localStorage.setItem(PUB, JSON.stringify(S)); localStorage.removeItem(KEY); }catch(e){}
+          $('pubmsg').innerHTML='✅ <b>Live now.</b> Everyone visiting the website sees these changes. '+
+            '<a href="index.html" style="color:#9ae6b4">Open the site</a>';
+          toast('✓ Published — it is live');
+        } else {
+          $('pubmsg').innerHTML='⚠️ Could not publish: '+(res.j&&res.j.error?res.j.error:'unknown error')+
+            '. Your changes are still saved on this device.';
+        }
+      })
+      .catch(function(){
+        btn.disabled=false; btn.textContent=old;
+        $('pubmsg').innerHTML='⚠️ No connection. Your changes are saved on this device — press Publish again when you are back online.';
+      });
     $('pubbox').scrollIntoView({behavior:'smooth'});
-  };
-  $('copyJson').onclick=function(){
-    var t=$('pubjson'); t.select(); t.setSelectionRange(0,999999);
-    try{ document.execCommand('copy'); toast('✓ Copied — paste it in a message to Kaan'); }catch(e){ toast('Select the text and copy'); }
-  };
-  $('dlJson').onclick=function(){
-    var blob=new Blob([$('pubjson').value],{type:'application/json'});
-    var a=document.createElement('a'); a.href=URL.createObjectURL(blob);
-    a.download='southern-grill-content.json'; document.body.appendChild(a); a.click(); a.remove();
-  };
-  $('smsJson').onclick=function(){
-    location.href='sms:+13465382404?&body=' + encodeURIComponent('Hi Kaan — I updated the website content. Sending the file next.');
   };
 
   loadFields(); drawHours(); drawOrd(); drawFilter(); drawMenu(); drawLoved(); drawRev(); drawAm();
