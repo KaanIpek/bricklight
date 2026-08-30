@@ -1,0 +1,422 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex, nofollow, noarchive">
+<title>Southern Grill — Owner Editor</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Figtree:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root{--char:#1c1714;--rust:#d1461f;--rust-dk:#a83515;--amber:#f0a52c;--cream:#fdf8f0;
+ --line:#e2d7c6;--ink:#2b241e;--mut:#7d7066;--ok:#0f766e;--fd:'Bebas Neue',sans-serif;--fb:'Figtree','Segoe UI',sans-serif}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:var(--fb);background:#f4efe6;color:var(--ink);line-height:1.55}
+a{color:var(--rust)}
+.top{background:var(--char);color:#fff;padding:.8rem 1.2rem;display:flex;justify-content:space-between;
+ align-items:center;gap:1rem;flex-wrap:wrap;position:sticky;top:0;z-index:50}
+.top .brand{font-family:var(--fd);font-size:1.35rem;letter-spacing:1.4px}
+.top .brand small{display:block;font-family:var(--fb);font-size:.58rem;letter-spacing:2.4px;color:#a2937f;font-weight:700}
+.top .acts{display:flex;gap:.5rem;flex-wrap:wrap}
+button{font-family:var(--fb);font-weight:800;border:0;border-radius:9px;cursor:pointer;padding:.6rem 1.1rem;font-size:.9rem;transition:.15s}
+button:hover{transform:translateY(-1px)}
+.b-save{background:var(--amber);color:var(--char)}
+.b-view{background:#3b332c;color:#f0e5d4}
+.b-pub{background:var(--ok);color:#fff}
+.b-reset{background:transparent;color:#a2937f;border:1px solid #4a413a}
+.b-sm{padding:.35rem .7rem;font-size:.78rem}
+.b-del{background:#fdecea;color:#b3261e}
+.b-add{background:var(--char);color:var(--amber)}
+
+.wrap{max-width:940px;margin:0 auto;padding:1.4rem 1.2rem 5rem}
+.card{background:#fff;border:1px solid var(--line);border-radius:14px;padding:1.4rem;margin-bottom:1.1rem}
+.card h2{font-family:var(--fd);font-size:1.5rem;letter-spacing:1px;margin-bottom:.2rem}
+.card .hint{color:var(--mut);font-size:.86rem;margin-bottom:1rem}
+label{display:block;font-weight:700;font-size:.8rem;letter-spacing:.4px;color:#5f5347;margin:.7rem 0 .25rem}
+input[type=text],input[type=url],textarea,select{width:100%;font-family:var(--fb);font-size:.95rem;padding:.6rem .75rem;
+ border:1.5px solid var(--line);border-radius:9px;background:#fffdf9;color:var(--ink)}
+input:focus,textarea:focus,select:focus{outline:0;border-color:var(--rust)}
+textarea{min-height:74px;resize:vertical}
+.row{display:grid;gap:.8rem}
+.row.c2{grid-template-columns:1fr 1fr}
+.row.c3{grid-template-columns:1fr 1fr 1fr}
+@media(max-width:640px){.row.c2,.row.c3{grid-template-columns:1fr}}
+
+.item{border:1px solid var(--line);border-radius:11px;padding:.9rem;margin-bottom:.7rem;background:#fffdf9}
+.item .head{display:flex;justify-content:space-between;align-items:center;gap:.6rem;margin-bottom:.5rem}
+.item .head strong{font-size:.95rem}
+.item .grid{display:grid;grid-template-columns:2fr 1fr;gap:.6rem}
+@media(max-width:640px){.item .grid{grid-template-columns:1fr}}
+.chk{display:flex;align-items:center;gap:.5rem;font-weight:700;font-size:.9rem;margin:.5rem 0}
+.chk input{width:18px;height:18px;accent-color:var(--rust)}
+.hourrow{display:grid;grid-template-columns:120px 1fr auto;gap:.6rem;align-items:center;margin-bottom:.45rem}
+@media(max-width:560px){.hourrow{grid-template-columns:90px 1fr auto}}
+.hourrow .dn{font-weight:700;font-size:.9rem}
+.toast{position:fixed;left:50%;bottom:1.4rem;transform:translateX(-50%);background:var(--ok);color:#fff;
+ padding:.8rem 1.4rem;border-radius:11px;font-weight:800;box-shadow:0 8px 24px rgba(0,0,0,.25);z-index:100;display:none}
+.gate{position:fixed;inset:0;background:var(--char);color:#fff;display:flex;align-items:center;justify-content:center;z-index:200;padding:1.5rem}
+.gate .box{max-width:360px;width:100%;text-align:center}
+.gate h1{font-family:var(--fd);font-size:2.2rem;letter-spacing:1.5px;color:var(--amber)}
+.gate p{color:#b6a794;font-size:.9rem;margin:.6rem 0 1.4rem}
+.gate input{text-align:center;font-size:1.4rem;letter-spacing:8px;font-weight:800;background:#2b241e;border-color:#4a413a;color:#fff}
+.gate button{width:100%;margin-top:.8rem;background:var(--amber);color:var(--char);padding:.8rem}
+.gate .err{color:#ff9b8a;font-size:.85rem;margin-top:.6rem;min-height:1.2em}
+.pubbox{background:var(--char);color:#e8dcc9;border-radius:12px;padding:1.1rem;margin-top:.9rem;display:none}
+.pubbox textarea{background:#111;color:#9ae6b4;font-family:ui-monospace,Consolas,monospace;font-size:.72rem;min-height:150px;border-color:#3b332c}
+.pubbox p{font-size:.86rem;margin-bottom:.6rem}
+.note{background:#fff8e6;border:1px solid #f0d9a0;border-radius:10px;padding:.8rem 1rem;font-size:.85rem;color:#6b5a2e;margin-bottom:1.1rem}
+</style>
+</head>
+<body>
+
+<div class="gate" id="gate">
+  <div class="box">
+    <h1>SOUTHERN GRILL</h1>
+    <p>Owner editor. Enter your PIN to continue.</p>
+    <input id="pin" type="text" inputmode="numeric" maxlength="4" placeholder="••••" autocomplete="off">
+    <button id="pinGo">Unlock</button>
+    <div class="err" id="pinErr"></div>
+  </div>
+</div>
+
+<div class="top">
+  <div class="brand">SOUTHERN GRILL<small>OWNER EDITOR</small></div>
+  <div class="acts">
+    <button class="b-view" id="view">👁 View site</button>
+    <button class="b-reset" id="reset">Undo all</button>
+    <button class="b-pub" id="publish">📤 Publish</button>
+    <button class="b-save" id="save">💾 Save changes</button>
+  </div>
+</div>
+
+<div class="wrap">
+  <div class="note">
+    <b>How this works:</b> Save writes your changes to this device instantly — open the site and you'll see them.
+    When you're happy, press <b>Publish</b> and send the file to Kaan (or, on the Hosting &amp; Care plan, it goes live automatically).
+  </div>
+
+  <!-- BASICS -->
+  <div class="card">
+    <h2>Basics</h2>
+    <p class="hint">Name, phone, address and the big headline on the front page.</p>
+    <div class="row c2">
+      <div><label>Restaurant name</label><input type="text" id="f_name"></div>
+      <div><label>City line (under the logo)</label><input type="text" id="f_city"></div>
+    </div>
+    <div class="row c3">
+      <div><label>Headline line 1</label><input type="text" id="f_h1"></div>
+      <div><label>Headline line 2</label><input type="text" id="f_h2"></div>
+      <div><label>Headline line 3 (gold)</label><input type="text" id="f_h3"></div>
+    </div>
+    <label>Short description under the headline</label><textarea id="f_tag"></textarea>
+    <div class="row c2">
+      <div><label>Phone (shown)</label><input type="text" id="f_phone"></div>
+      <div><label>Phone (dial format, e.g. +18432515638)</label><input type="text" id="f_phoneRaw"></div>
+    </div>
+    <div class="row c2">
+      <div><label>Address line 1</label><input type="text" id="f_a1"></div>
+      <div><label>Address line 2</label><input type="text" id="f_a2"></div>
+    </div>
+    <div class="row c2">
+      <div><label>Landmark / place</label><input type="text" id="f_place"></div>
+      <div><label>Price range</label><input type="text" id="f_price"></div>
+    </div>
+  </div>
+
+  <!-- ANNOUNCEMENT -->
+  <div class="card">
+    <h2>Announcement bar</h2>
+    <p class="hint">A gold strip at the very top — use it for a special, a holiday closing, or a new item.</p>
+    <div class="chk"><input type="checkbox" id="f_anncOn"><label for="f_anncOn" style="margin:0">Show the announcement bar</label></div>
+    <input type="text" id="f_anncText" placeholder="Today's special: ...">
+  </div>
+
+  <!-- RATING -->
+  <div class="card">
+    <h2>Google rating</h2>
+    <p class="hint">Update these when your Google score changes.</p>
+    <div class="row c2">
+      <div><label>Score</label><input type="text" id="f_score"></div>
+      <div><label>Number of reviews</label><input type="text" id="f_count"></div>
+    </div>
+    <label>Featured quote (shown in the gold box)</label><textarea id="f_quote"></textarea>
+    <label>Credited to</label><input type="text" id="f_quoteBy">
+  </div>
+
+  <!-- HOURS -->
+  <div class="card">
+    <h2>Opening hours</h2>
+    <p class="hint">Today's row is highlighted on the site automatically.</p>
+    <div id="hoursBox"></div>
+    <label>Short summary (shown in the top bar)</label><input type="text" id="f_hsum">
+  </div>
+
+  <!-- ORDER LINKS -->
+  <div class="card">
+    <h2>Ordering &amp; delivery links</h2>
+    <p class="hint">Turn a platform off if you stop using it. Paste the full link to your page on each app.</p>
+    <div id="ordBox"></div>
+    <button class="b-add b-sm" id="addOrd">+ Add another platform</button>
+  </div>
+
+  <!-- MENU -->
+  <div class="card">
+    <h2>Menu</h2>
+    <p class="hint">Price can be a number (10.99) or the word <b>ask</b> to show "ask in store". Badge is the little red tag.</p>
+    <label>Filter by category</label>
+    <select id="menuFilter"></select>
+    <div id="menuBox" style="margin-top:.9rem"></div>
+    <button class="b-add b-sm" id="addItem">+ Add menu item</button>
+    <label>Note under the menu</label><textarea id="f_menuNote"></textarea>
+  </div>
+
+  <!-- MOST LOVED -->
+  <div class="card">
+    <h2>Most talked about</h2>
+    <p class="hint">The three highlighted dishes at the top of the page.</p>
+    <div id="lovedBox"></div>
+    <label>Small note underneath</label><textarea id="f_lovedNote"></textarea>
+  </div>
+
+  <!-- REVIEWS -->
+  <div class="card">
+    <h2>Reviews shown on the site</h2>
+    <p class="hint">Paste real quotes from your Google reviews.</p>
+    <div id="revBox"></div>
+    <button class="b-add b-sm" id="addRev">+ Add review</button>
+  </div>
+
+  <!-- AMENITIES -->
+  <div class="card">
+    <h2>Good to know</h2>
+    <p class="hint">The eight cards near the bottom (parking, kids, dogs…).</p>
+    <div id="amBox"></div>
+  </div>
+
+  <div class="pubbox" id="pubbox">
+    <p><b>Copy everything below</b> and send it to Kaan — he'll put it live on the real site. Or download the file.</p>
+    <textarea id="pubjson" readonly></textarea>
+    <div style="margin-top:.7rem;display:flex;gap:.5rem;flex-wrap:wrap">
+      <button class="b-save b-sm" id="copyJson">Copy</button>
+      <button class="b-view b-sm" id="dlJson">Download file</button>
+      <button class="b-view b-sm" id="smsJson">Text Kaan</button>
+    </div>
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script src="content.js"></script>
+<script>
+(function(){
+  var KEY='sg_content_v1', PIN='2024';           /* PIN degistirilebilir */
+  var $=function(i){return document.getElementById(i)};
+  function deep(o){return JSON.parse(JSON.stringify(o))}
+  var S = deep(window.SG_DEFAULT);
+  try{ var raw=localStorage.getItem(KEY); if(raw){ var sv=JSON.parse(raw); for(var k in sv) S[k]=sv[k]; } }catch(e){}
+
+  /* ---- gate */
+  function unlock(){ $('gate').style.display='none'; try{sessionStorage.setItem('sg_admin','1')}catch(e){} }
+  try{ if(sessionStorage.getItem('sg_admin')==='1') unlock(); }catch(e){}
+  $('pinGo').onclick=function(){
+    if($('pin').value.trim()===PIN) unlock();
+    else { $('pinErr').textContent='Wrong PIN — try again.'; $('pin').value=''; }
+  };
+  $('pin').addEventListener('keydown',function(e){ if(e.key==='Enter') $('pinGo').click(); });
+
+  function toast(msg){ var t=$('toast'); t.textContent=msg; t.style.display='block';
+    clearTimeout(t._h); t._h=setTimeout(function(){t.style.display='none'},2200); }
+
+  /* ---- fill simple fields */
+  var map = {
+    f_name:['meta','name'], f_city:['meta','city'], f_h1:['meta','headline1'], f_h2:['meta','headline2'],
+    f_h3:['meta','headline3'], f_tag:['meta','tagline'], f_phone:['meta','phone'], f_phoneRaw:['meta','phoneRaw'],
+    f_a1:['meta','address1'], f_a2:['meta','address2'], f_place:['meta','place'], f_price:['meta','priceRange'],
+    f_score:['rating','score'], f_count:['rating','count'], f_quote:['rating','quote'], f_quoteBy:['rating','quoteBy'],
+    f_hsum:['hoursSummary'], f_menuNote:['menuNote'], f_lovedNote:['lovedNote'],
+    f_anncText:['announcement','text']
+  };
+  function loadFields(){
+    for (var id in map){
+      var p=map[id], v = p.length===2 ? S[p[0]][p[1]] : S[p[0]];
+      if($(id)) $(id).value = v==null?'':v;
+    }
+    $('f_anncOn').checked = !!(S.announcement && S.announcement.on);
+  }
+  function readFields(){
+    for (var id in map){
+      var p=map[id]; if(!$(id)) continue;
+      if(p.length===2) S[p[0]][p[1]]=$(id).value; else S[p[0]]=$(id).value;
+    }
+    S.announcement.on = $('f_anncOn').checked;
+  }
+
+  /* ---- hours */
+  function drawHours(){
+    $('hoursBox').innerHTML = S.hours.map(function(h,i){
+      return '<div class="hourrow"><span class="dn">'+h.day+'</span>'+
+        '<input type="text" data-h="'+i+'" value="'+(h.text||'').replace(/"/g,'&quot;')+'" '+(h.closed?'disabled':'')+'>'+
+        '<label style="margin:0;display:flex;align-items:center;gap:.35rem;font-size:.8rem">'+
+        '<input type="checkbox" data-hc="'+i+'" '+(h.closed?'checked':'')+' style="width:16px;height:16px">Closed</label></div>';
+    }).join('');
+    $('hoursBox').querySelectorAll('[data-hc]').forEach(function(c){
+      c.onchange=function(){ S.hours[+c.dataset.hc].closed=c.checked; drawHours(); };
+    });
+  }
+  function readHours(){
+    $('hoursBox').querySelectorAll('[data-h]').forEach(function(inp){ S.hours[+inp.dataset.h].text=inp.value; });
+  }
+
+  /* ---- order platforms */
+  function drawOrd(){
+    $('ordBox').innerHTML = S.order.map(function(o,i){
+      return '<div class="item"><div class="head"><strong>'+(o.label||'Platform')+'</strong>'+
+        '<button class="b-del b-sm" data-od="'+i+'">Remove</button></div>'+
+        '<div class="chk"><input type="checkbox" data-oon="'+i+'" '+(o.on?'checked':'')+'>Show this button on the site</div>'+
+        '<div class="row c2"><div><label>Name</label><input type="text" data-ol="'+i+'" value="'+(o.label||'').replace(/"/g,'&quot;')+'"></div>'+
+        '<div><label>Small text</label><input type="text" data-os="'+i+'" value="'+(o.sub||'').replace(/"/g,'&quot;')+'"></div></div>'+
+        '<label>Link</label><input type="url" data-ou="'+i+'" value="'+(o.url||'').replace(/"/g,'&quot;')+'" placeholder="https://...">'+
+        '</div>';
+    }).join('');
+    $('ordBox').querySelectorAll('[data-od]').forEach(function(b){
+      b.onclick=function(){ readOrd(); S.order.splice(+b.dataset.od,1); drawOrd(); };
+    });
+  }
+  function readOrd(){
+    $('ordBox').querySelectorAll('[data-ol]').forEach(function(x){ S.order[+x.dataset.ol].label=x.value; });
+    $('ordBox').querySelectorAll('[data-os]').forEach(function(x){ S.order[+x.dataset.os].sub=x.value; });
+    $('ordBox').querySelectorAll('[data-ou]').forEach(function(x){ S.order[+x.dataset.ou].url=x.value; });
+    $('ordBox').querySelectorAll('[data-oon]').forEach(function(x){ S.order[+x.dataset.oon].on=x.checked; });
+  }
+  $('addOrd').onclick=function(){ readOrd(); S.order.push({on:true,key:'other',label:'New platform',sub:'Delivery',url:''}); drawOrd(); };
+
+  /* ---- menu */
+  function catOptions(){
+    return S.categories.filter(function(c){return c.key!=='all'})
+      .map(function(c){return '<option value="'+c.key+'">'+c.label.replace(/&amp;/g,'&')+'</option>'}).join('');
+  }
+  function drawFilter(){
+    $('menuFilter').innerHTML = '<option value="all">All categories</option>' + catOptions();
+  }
+  function drawMenu(){
+    var f=$('menuFilter').value||'all';
+    $('menuBox').innerHTML = S.menu.map(function(x,i){
+      if(f!=='all' && x.c!==f) return '';
+      return '<div class="item"><div class="head"><strong>'+x.n+'</strong>'+
+        '<button class="b-del b-sm" data-md="'+i+'">Remove</button></div>'+
+        '<div class="grid"><div><label>Name</label><input type="text" data-mn="'+i+'" value="'+(x.n||'').replace(/"/g,'&quot;')+'"></div>'+
+        '<div><label>Price</label><input type="text" data-mp="'+i+'" value="'+(x.p||'').replace(/"/g,'&quot;')+'"></div></div>'+
+        '<label>Description</label><input type="text" data-mdsc="'+i+'" value="'+(x.d||'').replace(/"/g,'&quot;')+'">'+
+        '<div class="row c2"><div><label>Category</label><select data-mc="'+i+'">'+catOptions()+'</select></div>'+
+        '<div><label>Badge (optional)</label><input type="text" data-mb="'+i+'" value="'+(x.badge||'').replace(/"/g,'&quot;')+'"></div></div>'+
+        '</div>';
+    }).join('');
+    $('menuBox').querySelectorAll('[data-mc]').forEach(function(s){ s.value=S.menu[+s.dataset.mc].c; });
+    $('menuBox').querySelectorAll('[data-md]').forEach(function(b){
+      b.onclick=function(){ readMenu(); S.menu.splice(+b.dataset.md,1); drawMenu(); };
+    });
+  }
+  function readMenu(){
+    $('menuBox').querySelectorAll('[data-mn]').forEach(function(x){ S.menu[+x.dataset.mn].n=x.value; });
+    $('menuBox').querySelectorAll('[data-mp]').forEach(function(x){ S.menu[+x.dataset.mp].p=x.value; });
+    $('menuBox').querySelectorAll('[data-mdsc]').forEach(function(x){ S.menu[+x.dataset.mdsc].d=x.value; });
+    $('menuBox').querySelectorAll('[data-mb]').forEach(function(x){ S.menu[+x.dataset.mb].badge=x.value; });
+    $('menuBox').querySelectorAll('[data-mc]').forEach(function(x){ S.menu[+x.dataset.mc].c=x.value; });
+  }
+  $('menuFilter').onchange=function(){ readMenu(); drawMenu(); };
+  $('addItem').onclick=function(){
+    readMenu();
+    var f=$('menuFilter').value; if(f==='all') f=S.categories[1].key;
+    S.menu.push({c:f,n:'New item',p:'0.00',d:'',badge:''});
+    drawMenu(); window.scrollTo(0,document.body.scrollHeight*0.6);
+  };
+
+  /* ---- loved */
+  function drawLoved(){
+    $('lovedBox').innerHTML = S.loved.map(function(l,i){
+      return '<div class="item"><div class="row c2">'+
+        '<div><label>Dish</label><input type="text" data-ln="'+i+'" value="'+(l.name||'').replace(/"/g,'&quot;')+'"></div>'+
+        '<div><label>Mentioned in how many reviews</label><input type="text" data-lc="'+i+'" value="'+(l.count||'')+'"></div></div>'+
+        '<label>Rank label</label><input type="text" data-lr="'+i+'" value="'+(l.rank||'').replace(/"/g,'&quot;')+'">'+
+        '<label>Description</label><textarea data-ld="'+i+'">'+(l.desc||'')+'</textarea></div>';
+    }).join('');
+  }
+  function readLoved(){
+    $('lovedBox').querySelectorAll('[data-ln]').forEach(function(x){ S.loved[+x.dataset.ln].name=x.value; });
+    $('lovedBox').querySelectorAll('[data-lc]').forEach(function(x){ S.loved[+x.dataset.lc].count=x.value; });
+    $('lovedBox').querySelectorAll('[data-lr]').forEach(function(x){ S.loved[+x.dataset.lr].rank=x.value; });
+    $('lovedBox').querySelectorAll('[data-ld]').forEach(function(x){ S.loved[+x.dataset.ld].desc=x.value; });
+  }
+
+  /* ---- reviews */
+  function drawRev(){
+    $('revBox').innerHTML = S.reviews.map(function(r,i){
+      return '<div class="item"><div class="head"><strong>Review '+(i+1)+'</strong>'+
+        '<button class="b-del b-sm" data-rd="'+i+'">Remove</button></div>'+
+        '<label>Quote</label><textarea data-rt="'+i+'">'+(r.text||'')+'</textarea>'+
+        '<div class="row c2"><div><label>Stars (1–5)</label><input type="text" data-rs="'+i+'" value="'+(r.stars||5)+'"></div>'+
+        '<div><label>Credited to</label><input type="text" data-rb="'+i+'" value="'+(r.by||'').replace(/"/g,'&quot;')+'"></div></div></div>';
+    }).join('');
+    $('revBox').querySelectorAll('[data-rd]').forEach(function(b){
+      b.onclick=function(){ readRev(); S.reviews.splice(+b.dataset.rd,1); drawRev(); };
+    });
+  }
+  function readRev(){
+    $('revBox').querySelectorAll('[data-rt]').forEach(function(x){ S.reviews[+x.dataset.rt].text=x.value; });
+    $('revBox').querySelectorAll('[data-rs]').forEach(function(x){ S.reviews[+x.dataset.rs].stars=Math.max(1,Math.min(5,parseInt(x.value)||5)); });
+    $('revBox').querySelectorAll('[data-rb]').forEach(function(x){ S.reviews[+x.dataset.rb].by=x.value; });
+  }
+  $('addRev').onclick=function(){ readRev(); S.reviews.push({stars:5,text:'',by:'Google review'}); drawRev(); };
+
+  /* ---- amenities */
+  function drawAm(){
+    $('amBox').innerHTML = S.amenities.map(function(a,i){
+      return '<div class="item"><label>Title</label><input type="text" data-at="'+i+'" value="'+(a.t||'').replace(/"/g,'&quot;')+'">'+
+        '<label>Text</label><textarea data-ax="'+i+'">'+(a.x||'')+'</textarea></div>';
+    }).join('');
+  }
+  function readAm(){
+    $('amBox').querySelectorAll('[data-at]').forEach(function(x){ S.amenities[+x.dataset.at].t=x.value; });
+    $('amBox').querySelectorAll('[data-ax]').forEach(function(x){ S.amenities[+x.dataset.ax].x=x.value; });
+  }
+
+  function readAll(){ readFields(); readHours(); readOrd(); readMenu(); readLoved(); readRev(); readAm(); }
+
+  /* ---- actions */
+  $('save').onclick=function(){
+    readAll();
+    try{ localStorage.setItem(KEY, JSON.stringify(S)); toast('✓ Saved — open the site to see it'); }
+    catch(e){ toast('Could not save on this device'); }
+  };
+  $('view').onclick=function(){ readAll(); try{localStorage.setItem(KEY,JSON.stringify(S))}catch(e){} location.href='index.html'; };
+  $('reset').onclick=function(){
+    if(!confirm('Undo every change and go back to the original site?')) return;
+    try{ localStorage.removeItem(KEY); }catch(e){}
+    location.reload();
+  };
+  $('publish').onclick=function(){
+    readAll();
+    try{ localStorage.setItem(KEY, JSON.stringify(S)); }catch(e){}
+    $('pubjson').value = JSON.stringify(S, null, 1);
+    $('pubbox').style.display='block';
+    $('pubbox').scrollIntoView({behavior:'smooth'});
+  };
+  $('copyJson').onclick=function(){
+    var t=$('pubjson'); t.select(); t.setSelectionRange(0,999999);
+    try{ document.execCommand('copy'); toast('✓ Copied — paste it in a message to Kaan'); }catch(e){ toast('Select the text and copy'); }
+  };
+  $('dlJson').onclick=function(){
+    var blob=new Blob([$('pubjson').value],{type:'application/json'});
+    var a=document.createElement('a'); a.href=URL.createObjectURL(blob);
+    a.download='southern-grill-content.json'; document.body.appendChild(a); a.click(); a.remove();
+  };
+  $('smsJson').onclick=function(){
+    location.href='sms:+13465382404?&body=' + encodeURIComponent('Hi Kaan — I updated the website content. Sending the file next.');
+  };
+
+  loadFields(); drawHours(); drawOrd(); drawFilter(); drawMenu(); drawLoved(); drawRev(); drawAm();
+})();
+</script>
+</body>
+</html>
