@@ -294,7 +294,7 @@ textarea{min-height:74px;resize:vertical}
   /* ---- menu */
   function catOptions(){
     return S.categories.filter(function(c){return c.key!=='all'})
-      .map(function(c){return '<option value="'+c.key+'">'+c.label.replace(/&amp;/g,'&')+'</option>'}).join('');
+      .map(function(c){return '<option value="'+c.key+'">'+c.label+'</option>'}).join('');
   }
   function drawFilter(){
     $('menuFilter').innerHTML = '<option value="all">All categories</option>' + catOptions();

@@ -4,7 +4,7 @@ window.SG_DEFAULT = {
     name: "SOUTHERN GRILL",
     city: "MYRTLE BEACH, SC",
     headline1: "Gyros, burgers",
-    headline2: "&amp; cheesesteaks.",
+    headline2: "& cheesesteaks.",
     headline3: "Hot off the grill.",
     tagline: "Mediterranean plates, Southern comfort food and fresh salads — cooked to order, a few steps from the boardwalk.",
     place: "Broadway at the Beach",
@@ -43,14 +43,14 @@ window.SG_DEFAULT = {
   lovedNote: "Counts taken from public Google reviews. Also frequently named: chicken tenders (27), guacamole burger (20), onion rings (19), grilled chicken wrap (14), Greek salad (12).",
   categories: [
     { key: "all",           label: "Everything" },
-    { key: "mediterranean", label: "Gyros &amp; Wings" },
+    { key: "mediterranean", label: "Gyros & Wings" },
     { key: "burgers",       label: "Burgers" },
     { key: "sandwiches",    label: "Sandwiches" },
-    { key: "wraps",         label: "Wraps &amp; Tenders" },
+    { key: "wraps",         label: "Wraps & Tenders" },
     { key: "salads",        label: "Salads" },
     { key: "sides",         label: "Sides" },
     { key: "kids",          label: "Kids" },
-    { key: "drinks",        label: "Drinks &amp; Dessert" }
+    { key: "drinks",        label: "Drinks & Dessert" }
   ],
   menu: [
     { c:"mediterranean", n:"Gyro", p:"ask", d:"Seasoned meat, fresh veg and sauce in warm pita", badge:"#1 most reviewed" },
@@ -76,7 +76,7 @@ window.SG_DEFAULT = {
     { c:"sides", n:"Onion Rings", p:"8.99", d:"Thick cut, crispy", badge:"" },
     { c:"sides", n:"Mozzarella Sticks", p:"9.99", d:"With marinara", badge:"" },
     { c:"sides", n:"Fried Pickles", p:"10.99", d:"Southern staple", badge:"" },
-    { c:"sides", n:"Mac &amp; Cheese Bites", p:"10.99", d:"Crispy outside, creamy inside", badge:"" },
+    { c:"sides", n:"Mac & Cheese Bites", p:"10.99", d:"Crispy outside, creamy inside", badge:"" },
     { c:"sides", n:"Cheese on Fries", p:"2.99", d:"Add to any fries", badge:"" },
     { c:"sides", n:"Combo", p:"4.99", d:"Add fries and a drink", badge:"" },
     { c:"kids", n:"Kids Cheeseburger", p:"ask", d:"Served with fries", badge:"" },
@@ -84,7 +84,7 @@ window.SG_DEFAULT = {
     { c:"kids", n:"Kids Grilled Hot Dog", p:"ask", d:"Served with fries", badge:"" },
     { c:"kids", n:"Kids Grilled Cheese", p:"ask", d:"Served with fries", badge:"" },
     { c:"drinks", n:"Smoothie", p:"9.99", d:"Made fresh — guests mention these a lot", badge:"" },
-    { c:"drinks", n:"Combo Fries &amp; Smoothie", p:"12.99", d:"Fries plus a smoothie", badge:"" },
+    { c:"drinks", n:"Combo Fries & Smoothie", p:"12.99", d:"Fries plus a smoothie", badge:"" },
     { c:"drinks", n:"Hot Coffee", p:"ask", d:"Freshly brewed", badge:"" },
     { c:"drinks", n:"NY Style Cheesecake", p:"9.99", d:"Rich and creamy", badge:"" },
     { c:"drinks", n:"Bottled Beverage", p:"3.99", d:"Sodas and more", badge:"" },
@@ -100,7 +100,7 @@ window.SG_DEFAULT = {
   amenities: [
     { i:"i-kids",   t:"Great with kids",             x:"Kids' menu, high chairs and changing tables. Nuggets, grilled cheese, hot dogs and burgers — all with fries." },
     { i:"i-car",    t:"Free parking",                x:"Broadway at the Beach has free lots and a free garage. Curbside pickup if you'd rather stay in the car." },
-    { i:"i-leaf",   t:"Vegetarian &amp; halal options", x:"Veggie burger, Greek salad and more. Ask us — we'll point you to the right plate." },
+    { i:"i-leaf",   t:"Vegetarian & halal options", x:"Veggie burger, Greek salad and more. Ask us — we'll point you to the right plate." },
     { i:"i-sun",    t:"Outdoor seating",             x:"Grab a table outside and watch Broadway go by, or take it to the lake." },
     { i:"i-dog",    t:"Dogs welcome",                x:"Your dog's allowed with you outside — plenty of walkers stop by between shops." },
     { i:"i-access", t:"Easy access",                 x:"Wheelchair accessible entrance, restrooms on site, counter service and table seating." },
