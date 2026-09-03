@@ -432,6 +432,15 @@ textarea{min-height:74px;resize:vertical}
       'This page needs the full editor link. Open the link Bricklight sent you — the part after the # is what unlocks it.';
     $('pin').style.display='none';
     $('pinGo').style.display='none';
+    /* Pasting the full link into this already-open tab only changes the
+       fragment, which is a same-document navigation - the page does not
+       reload and TOKEN stays empty, so the owner sees "your link is
+       incomplete" while looking at a complete link. Reload once the
+       fragment turns into a well-formed key. */
+    window.addEventListener('hashchange', function(){
+      if(/^[0-9a-f]{32}$/.test((location.hash||'').replace(/^#/,'').trim().toLowerCase()))
+        location.reload();
+    });
   } else if(PIN) $('gate').style.display='none';
   $('pinGo').onclick=function(){
     var v=$('pin').value.trim();
