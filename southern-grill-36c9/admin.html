@@ -89,6 +89,10 @@ textarea{min-height:74px;resize:vertical}
 .pubbox textarea{background:#111;color:#9ae6b4;font-family:ui-monospace,Consolas,monospace;font-size:.72rem;min-height:150px;border-color:#3b332c}
 .pubbox p{font-size:.86rem;margin-bottom:.6rem}
 .note{background:#fff8e6;border:1px solid #f0d9a0;border-radius:10px;padding:.8rem 1rem;font-size:.85rem;color:#6b5a2e;margin-bottom:1.1rem}
+.item.lm-hidden{border-left:3px solid #d98b2b}
+.lm-tag{background:#fdf0d8;color:#8a5a12;border-radius:99px;padding:.12rem .55rem;
+  font-size:.72rem;font-weight:700;margin-left:.55rem}
+.lm-need{color:#b4610f;font-weight:700}
 </style>
 </head>
 <body>
@@ -351,8 +355,17 @@ textarea{min-height:74px;resize:vertical}
      page only holds whatever the owner typed, for this browser session, and
      every write sends it as X-Edit-Pin. A 401/403 clears it and re-locks. */
   var KEY='sg_content_v1', PUB='sg_published_v1';
+  /* PIN YALNIZCA BELLEKTE. sessionStorage KOKEN bazlidir, sayfa bazli degil:
+     bu editor ile herkese acik site ayni kokende (kaanipek.github.io) durdugu
+     icin, PIN'i oraya yazmak onu o kokende calisan HER sayfaya okunur
+     yapiyordu - denetimde PIN gercekten halka acik restoran sayfasindan
+     okundu. Bu, iki-sirli tasarimi tek sirra indiriyordu.
+     Sekme kapanmadikca bellekteki deger yasiyor, o yuzden sahibin pratikte
+     kaybettigi bir sey yok: "View site" artik YENI SEKMEDE aciliyor, yani
+     editor sekmesi hicbir zaman terk edilmiyor.
+     Yan fayda: acilista PIN olmadigi icin pruneSoldOut() artik sahibin
+     haberi olmadan yayin yapamiyor - once kilidi acmasi gerekiyor. */
   var PIN=null;
-  try{ PIN=sessionStorage.getItem('sg_pin')||null; }catch(e){}
   function needPin(){ if(!PIN){ $('gate').style.display='flex'; return false; } return true; }
 
   /* ══════════════════════════════════════════════════════════════════════════
@@ -390,6 +403,12 @@ textarea{min-height:74px;resize:vertical}
   }
   var API='https://bricklight-content.eminetinoco.workers.dev', SITE='southern-grill';
   var $=function(i){return document.getElementById(i)};
+  /* Bu sayfa yayindaki dokumani innerHTML ile ciziyor, ve ayni sayfada
+     location.hash icinde 128 bitlik duzenleme anahtari duruyor. Yani buradaki
+     bir HTML enjeksiyonu sadece bicimi bozmaz - anahtari calar. Ayni degerler
+     zaten OZNITELIK icinde kacisliyordu; oge ICERIGINDE kacislanmiyordu. */
+  function esc(x){ return String(x==null?'':x).replace(/[&<>"]/g,function(c){
+    return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]; }); }
   function deep(o){return JSON.parse(JSON.stringify(o))}
   /* ══════════════════════════════════════════════════════════════════════════
      WHAT THE EDITOR IS LOOKING AT
@@ -432,20 +451,32 @@ textarea{min-height:74px;resize:vertical}
       'This page needs the full editor link. Open the link Bricklight sent you — the part after the # is what unlocks it.';
     $('pin').style.display='none';
     $('pinGo').style.display='none';
-    /* Pasting the full link into this already-open tab only changes the
-       fragment, which is a same-document navigation - the page does not
-       reload and TOKEN stays empty, so the owner sees "your link is
-       incomplete" while looking at a complete link. Reload once the
-       fragment turns into a well-formed key. */
-    window.addEventListener('hashchange', function(){
-      if(/^[0-9a-f]{32}$/.test((location.hash||'').replace(/^#/,'').trim().toLowerCase()))
-        location.reload();
-    });
-  } else if(PIN) $('gate').style.display='none';
+  }
+
+  /* Pasting a link into an ALREADY-OPEN tab changes only the fragment, which
+     is a same-document navigation: the page does not reload, TOKEN keeps the
+     value it was born with, and every write keeps going out with the old key.
+
+     This has to be registered on EVERY load, not only when the page opened
+     without a key. It first lived inside the branch above, which covered the
+     harmless case (an incomplete link) and missed the one that matters: after
+     a token rotation the owner is holding a NEW link while the open tab still
+     carries the revoked one, so every Publish fails with "this link is not
+     valid any more" - advice that points away from the fix, since the working
+     link is already in the address bar. */
+  window.addEventListener('hashchange', function(){
+    var h = (location.hash||'').replace(/^#/,'').trim().toLowerCase();
+    if(/^[0-9a-f]{32}$/.test(h) && h !== TOKEN) location.reload();
+  });
+
+  if(TOKEN_OK && PIN) $('gate').style.display='none';
   $('pinGo').onclick=function(){
     var v=$('pin').value.trim();
     if(v.length<4){ $('pinErr').textContent='Enter your PIN.'; return; }
-    PIN=v; try{ sessionStorage.setItem('sg_pin',v); sessionStorage.setItem('sg_admin','1'); }catch(e){}
+    PIN=v;
+    /* Eski surumlerin biraktigi degeri de temizle - o kokende duran her sayfa
+       onu okuyabiliyor. */
+    try{ sessionStorage.removeItem('sg_pin'); sessionStorage.removeItem('sg_admin'); }catch(e){}
     $('gate').style.display='none'; $('pinErr').textContent='';
     /* the prune could not persist without a PIN, so run it again now */
     if(BOOTED) pruneSoldOut();
@@ -455,7 +486,7 @@ textarea{min-height:74px;resize:vertical}
     var el=$(id); if(el) el.addEventListener('change', checkOrderWindow); });
   $('hoursBox').addEventListener('change', function(){ readHours(); });
   function authFail(){
-    PIN=null; try{ sessionStorage.removeItem('sg_pin'); }catch(e){}
+    PIN=null; try{ sessionStorage.removeItem('sg_pin'); sessionStorage.removeItem('sg_admin'); }catch(e){}
     $('gate').style.display='flex'; $('pinErr').textContent='That PIN was rejected. Try again.';
   }
 
@@ -588,7 +619,7 @@ textarea{min-height:74px;resize:vertical}
   /* ---- order platforms */
   function drawOrd(){
     $('ordBox').innerHTML = S.order.map(function(o,i){
-      return '<div class="item"><div class="head"><strong>'+(o.label||'Platform')+'</strong>'+
+      return '<div class="item"><div class="head"><strong>'+esc(o.label||'Platform')+'</strong>'+
         '<button class="b-del b-sm" data-od="'+i+'">Remove</button></div>'+
         '<div class="chk"><input type="checkbox" data-oon="'+i+'" '+(o.on?'checked':'')+'>Show this button on the site</div>'+
         '<div class="row c2"><div><label>Name</label><input type="text" data-ol="'+i+'" value="'+(o.label||'').replace(/"/g,'&quot;')+'"></div>'+
@@ -628,7 +659,7 @@ textarea{min-height:74px;resize:vertical}
     var f=$('menuFilter').value||'all';
     $('menuBox').innerHTML = S.menu.map(function(x,i){
       if(f!=='all' && x.c!==f) return '';
-      return '<div class="item"><div class="head"><strong>'+x.n+'</strong>'+
+      return '<div class="item"><div class="head"><strong>'+esc(x.n)+'</strong>'+
         '<button class="b-del b-sm" data-md="'+i+'">Remove</button></div>'+
         '<div class="grid"><div><label>Name</label><input type="text" data-mn="'+i+'" value="'+(x.n||'').replace(/"/g,'&quot;')+'"></div>'+
         '<div><label>Price</label><input type="text" data-mp="'+i+'" value="'+(x.p||'').replace(/"/g,'&quot;')+'"></div></div>'+
@@ -734,13 +765,22 @@ textarea{min-height:74px;resize:vertical}
   function drawLm(){
     $('lmWarn').hidden = !S.landmarksDraft;
     $('lmBox').innerHTML = (S.landmarks||[]).map(function(x,i){
-      return '<div class="item"><div class="head"><strong>'+(x.name||'Landmark')+'</strong>'+
+      /* Bos yon = sitede GORUNMEZ. Public sayfa, yonu bos olan landmark'i
+         cizmeden atiyor (index.html'deki L.filter) - ki dogrusu bu, cunku
+         "5 dakika" yazip nasil gidilecegini soylemeyen bir kart ise yaramaz.
+         Ama editor bunu soylemiyordu: sahibi bes tane goruyor, musteri uc
+         tane goruyor, ve Publish yine "Live now" diyor. Yalan soyleyen bir
+         onay ekrani en kotu turden hata. */
+      var noDir = !String(x.dir||'').trim();
+      return '<div class="item'+(noDir?' lm-hidden':'')+'"><div class="head"><strong>'+esc(x.name||'Landmark')+'</strong>'+
+        (noDir?'<span class="lm-tag">Not on your site yet</span>':'')+
         '<button class="b-del b-sm" data-lmd="'+i+'">Remove</button></div>'+
         '<div class="row c2"><div><label>Landmark name</label>'+
           '<input type="text" data-lmn="'+i+'" value="'+(x.name||'').replace(/"/g,'&quot;')+'"></div>'+
         '<div><label>Walk time</label><select data-lmw="'+i+'">'+
           WALKS.map(function(w){return '<option value="'+w+'">'+w+'</option>';}).join('')+'</select></div></div>'+
-        '<label>Your walking directions (plain English, say "about")</label>'+
+        '<label>Your walking directions (plain English, say "about")'+
+          (noDir?' <b class="lm-need">— fill this in or it will not show</b>':'')+'</label>'+
         '<textarea data-lmx="'+i+'">'+String(x.dir||'').replace(/</g,'&lt;')+'</textarea>'+
         '<div class="chk"><input type="checkbox" data-lmf="'+i+'" '+(x.first?'checked':'')+
           '>Show this one first</div></div>';
@@ -979,7 +1019,11 @@ textarea{min-height:74px;resize:vertical}
     try{ localStorage.setItem(KEY, JSON.stringify(S)); toast('✓ Saved — open the site to see it'); }
     catch(e){ toast('Could not save on this device'); }
   };
-  $('view').onclick=function(){ readAll(); try{localStorage.setItem(KEY,JSON.stringify(S))}catch(e){} location.href='index.html'; };
+  /* Yeni sekme: editor sekmesi acik kalsin ki bellekteki PIN olmesin.
+     noopener - acilan sayfa window.opener uzerinden bu sayfaya (ve
+     dolayisiyla anahtara) uzanamasin. */
+  $('view').onclick=function(){ readAll(); try{localStorage.setItem(KEY,JSON.stringify(S))}catch(e){}
+    window.open('index.html','_blank','noopener'); };
   $('reset').onclick=function(){
     if(!confirm('Undo every change and go back to the original site?')) return;
     try{ localStorage.removeItem(KEY); }catch(e){}
@@ -1027,7 +1071,7 @@ textarea{min-height:74px;resize:vertical}
             if(r.status===404){ var n=new Error('link'); n.link=true; throw n; }
             if(!r.ok) throw new Error('http');
             try{ localStorage.setItem(PUB, JSON.stringify(doc)); localStorage.removeItem(KEY); }catch(e){}
-            $('pubmsg').innerHTML='✅ <b>Live now.</b> <a href="index.html" style="color:#9ae6b4">Open the site</a>';
+            $('pubmsg').innerHTML='✅ <b>Live now.</b> <a href="index.html" target="_blank" rel="noopener" style="color:#9ae6b4">Open the site</a>';
             toast('✓ Published — it is live');
           });
       })
