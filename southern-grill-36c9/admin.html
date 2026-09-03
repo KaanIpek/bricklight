@@ -34,7 +34,7 @@ button:hover{transform:translateY(-1px)}
 .card h2{font-family:var(--fd);font-size:1.5rem;letter-spacing:1px;margin-bottom:.2rem}
 .card .hint{color:var(--mut);font-size:.86rem;margin-bottom:1rem}
 label{display:block;font-weight:700;font-size:.8rem;letter-spacing:.4px;color:#5f5347;margin:.7rem 0 .25rem}
-input[type=text],input[type=url],textarea,select{width:100%;font-family:var(--fb);font-size:.95rem;padding:.6rem .75rem;
+input[type=text],input[type=url],input[type=time],textarea,select{width:100%;font-family:var(--fb);font-size:.95rem;padding:.6rem .75rem;
  border:1.5px solid var(--line);border-radius:9px;background:#fffdf9;color:var(--ink)}
 input:focus,textarea:focus,select:focus{outline:0;border-color:var(--rust)}
 textarea{min-height:74px;resize:vertical}
@@ -53,6 +53,24 @@ textarea{min-height:74px;resize:vertical}
 .hourrow{display:grid;grid-template-columns:120px 1fr auto;gap:.6rem;align-items:center;margin-bottom:.45rem}
 @media(max-width:560px){.hourrow{grid-template-columns:90px 1fr auto}}
 .hourrow .dn{font-weight:700;font-size:.9rem}
+.hourrow2{display:grid;grid-template-columns:100px 1fr 26px 1fr 1.4fr auto;gap:.45rem;align-items:center;margin-bottom:.45rem}
+.hourrow2 .dn{font-weight:700;font-size:.9rem}
+.hourrow2 .dash{text-align:center;color:var(--mut);font-size:.8rem}
+@media(max-width:760px){.hourrow2{grid-template-columns:80px 1fr 22px 1fr;grid-auto-rows:auto}
+  .hourrow2 [data-h]{grid-column:1/-1} .hourrow2 label{grid-column:1/-1}}
+.qgrid{display:grid;grid-template-columns:repeat(4,1fr);gap:.6rem}
+@media(max-width:640px){.qgrid{grid-template-columns:1fr 1fr}}
+.q{min-height:74px;display:flex;flex-direction:column;align-items:center;justify-content:center;
+   gap:.15rem;font-size:1.02rem;line-height:1.1;border:2px solid transparent}
+.q small{font-weight:600;font-size:.68rem;opacity:.8}
+.q-quiet{background:#e8f5ec;color:#1d5c31} .q-busy{background:#fdf0d8;color:#8a6412}
+.q-slammed{background:#fbe3dd;color:#a83515} .q-clear{background:#efeae2;color:#5f5347}
+.q.on{border-color:var(--char)}
+.qnow{margin-top:.8rem;font-size:.9rem;font-weight:700;color:var(--ok)}
+.qrow{display:flex;justify-content:space-between;align-items:center;gap:.6rem;
+  background:#fbe3dd;border-radius:9px;padding:.5rem .7rem;margin-bottom:.4rem;font-weight:700;font-size:.9rem}
+.warnbox{background:#fbe3dd;border:1px solid #e8a795;border-radius:10px;padding:.8rem 1rem;
+  font-size:.85rem;color:#8b2b14;margin-bottom:1rem}
 .toast{position:fixed;left:50%;bottom:1.4rem;transform:translateX(-50%);background:var(--ok);color:#fff;
  padding:.8rem 1.4rem;border-radius:11px;font-weight:800;box-shadow:0 8px 24px rgba(0,0,0,.25);z-index:100;display:none}
 .gate{position:fixed;inset:0;background:var(--char);color:#fff;display:flex;align-items:center;justify-content:center;z-index:200;padding:1.5rem}
@@ -70,11 +88,22 @@ textarea{min-height:74px;resize:vertical}
 </head>
 <body>
 
+<!-- Shown until the live published document has been fetched and merged. The
+     editor used to draw from SG_DEFAULT + this device's draft only, so on a
+     phone that had never saved a draft every field showed the shipped defaults
+     rather than what is live - and Publish then overwrote the site with them. -->
+<div class="gate" id="boot" style="z-index:210">
+  <div class="box">
+    <h1>SOUTHERN GRILL</h1>
+    <p id="bootMsg">Loading what is on your website right now…</p>
+  </div>
+</div>
+
 <div class="gate" id="gate">
   <div class="box">
     <h1>SOUTHERN GRILL</h1>
     <p>Owner editor. Enter your PIN to continue.</p>
-    <input id="pin" type="text" inputmode="numeric" maxlength="4" placeholder="••••" autocomplete="off">
+    <input id="pin" type="password" inputmode="numeric" maxlength="12" placeholder="••••••" autocomplete="off">
     <button id="pinGo">Unlock</button>
     <div class="err" id="pinErr"></div>
   </div>
@@ -91,10 +120,33 @@ textarea{min-height:74px;resize:vertical}
 </div>
 
 <div class="wrap">
+  <div class="card" id="quickCard" style="border:2px solid var(--rust)">
+    <h2>Right now</h2>
+    <p class="hint">These four buttons go live straight away — no Save, no Publish. Use them from the grill.</p>
+    <div class="qgrid">
+      <button class="q q-quiet"   data-q="quiet">Quiet<small>walk right in · 1 hr</small></button>
+      <button class="q q-busy"    data-q="busy">Busy<small>+10 min · 1½ hr</small></button>
+      <button class="q q-slammed" data-q="slammed">Slammed<small>+20 min · 1 hr</small></button>
+      <button class="q q-clear"   data-q="">Clear<small>back to normal</small></button>
+    </div>
+    <p id="qNow" class="qnow"></p>
+    <label style="margin-top:1rem">Sold out today</label>
+    <div id="qSold"></div>
+    <div class="row c2" style="margin-top:.5rem">
+      <select id="qSoldPick"></select>
+      <button class="b-add b-sm" id="qSoldAdd">Mark sold out for today</button>
+    </div>
+    <p class="hint" id="qPruned" style="margin:.6rem 0 0"></p>
+  </div>
+
   <div class="note">
     <b>How this works:</b> <b>Save</b> keeps your changes on this device so you can check them first —
     open the site and you'll see them. When you're happy, press <b>Publish</b> and they go live for
     everyone, straight away. Nothing to send to anyone.
+    <br><br>
+    <b>Only one person should edit at a time.</b> If you and someone else publish within a minute of
+    each other, the last one wins and there's no undo history. The four <b>Right Now</b> buttons are
+    safe — they only change that one setting.
   </div>
 
   <!-- BASICS -->
@@ -125,6 +177,43 @@ textarea{min-height:74px;resize:vertical}
     </div>
   </div>
 
+  <!-- SEARCH / LISTINGS -->
+  <div class="card">
+    <h2>Search &amp; listings</h2>
+    <p class="hint">This is what Google, Apple Maps and AI assistants read. Change it rarely — but keep it true.</p>
+    <div class="row c2">
+      <div><label>Business name (proper case, for Google)</label><input type="text" id="f_seoBrand"></div>
+      <div><label>Website address</label><input type="url" id="f_seoUrl"></div>
+    </div>
+    <div class="row c3">
+      <div><label>Latitude</label><input type="text" id="f_seoLat"></div>
+      <div><label>Longitude</label><input type="text" id="f_seoLng"></div>
+      <div><label>Google Maps share link</label><input type="url" id="f_seoGmap" placeholder="https://maps.app.goo.gl/..."></div>
+    </div>
+    <div class="row c2">
+      <div><label>We are inside…</label><input type="text" id="f_seoParent"></div>
+      <div><label>…its website</label><input type="url" id="f_seoParentUrl"></div>
+    </div>
+    <label>Kinds of food (comma separated)</label><input type="text" id="f_seoCuisines">
+    <p class="hint" style="margin:.3rem 0 0">Only list a kind of food the page itself mentions — in the
+      headline, a menu item or an answer below. Google treats a claim the page does not make as a problem.</p>
+    <label>Ways to pay (comma separated)</label><input type="text" id="f_seoPayment" placeholder="Credit Card, Debit Card, Contactless">
+    <div class="chk" style="margin-top:1rem"><input type="checkbox" id="f_seoOwnPhotos">
+      <label for="f_seoOwnPhotos" style="margin:0">The dish photos on the site are <b>our own</b> photos</label></div>
+    <p class="hint" style="margin:0 0 .6rem">Leave this off while the site is using our sample photos. Tick it the
+      day your own pictures go up: it is what lets Google show them as photos of <i>your</i> food.</p>
+    <label>What we offer — only tick what is true, and what the page actually says</label>
+    <div id="seoFeatBox" class="row c3"></div>
+  </div>
+
+  <!-- QUESTIONS -->
+  <div class="card">
+    <h2>Common questions</h2>
+    <p class="hint">These show on the site and are what Google and AI assistants quote. Answer like you would at the counter.</p>
+    <div id="faqBox"></div>
+    <button class="b-add b-sm" id="addFaq">+ Add a question</button>
+  </div>
+
   <!-- ANNOUNCEMENT -->
   <div class="card">
     <h2>Announcement bar</h2>
@@ -148,9 +237,55 @@ textarea{min-height:74px;resize:vertical}
   <!-- HOURS -->
   <div class="card">
     <h2>Opening hours</h2>
-    <p class="hint">Today's row is highlighted on the site automatically.</p>
+    <p class="hint">The two time boxes are what the website does its maths with. The text box is only how it
+      reads to a customer — change both if you change your hours. Today's row is highlighted on the site automatically.</p>
     <div id="hoursBox"></div>
+    <div class="warnbox" id="hoursErr" hidden></div>
     <label>Short summary (shown in the top bar)</label><input type="text" id="f_hsum">
+  </div>
+
+  <!-- READY TIME -->
+  <div class="card">
+    <h2>Ready time &amp; ordering window</h2>
+    <p class="hint">This is what the panel under the hero promises people.</p>
+    <div class="chk"><input type="checkbox" id="f_rcOn"><label for="f_rcOn" style="margin:0">Show the "when do I eat" panel</label></div>
+    <div class="row c2">
+      <div><label>How long a pickup order really takes</label><select id="f_rcPrep"></select></div>
+      <div><label>Stop taking orders this long before closing</label><select id="f_rcLast"></select></div>
+    </div>
+    <label>How the promise reads</label><input type="text" id="f_rcPhrase" placeholder="usually ready by about">
+    <div class="warnbox" style="margin:1rem 0 .4rem">
+      <b>Only narrow this if your online ordering page is actually offline.</b>
+      Leave both boxes empty and the Order Direct button follows your normal kitchen hours.
+    </div>
+    <div class="row c2">
+      <div><label>Online ordering starts</label><input type="time" id="f_rcOs"></div>
+      <div><label>Online ordering stops</label><input type="time" id="f_rcOe"></div>
+    </div>
+    <div class="warnbox" id="ordWinErr" hidden></div>
+    <label>What to say when online ordering is off but you're cooking</label>
+    <input type="text" id="f_rcClosed">
+    <div class="row c2">
+      <div><label>Before you open</label><input type="text" id="f_rcSoon"></div>
+      <div><label>After you close</label><input type="text" id="f_rcShut"></div>
+    </div>
+  </div>
+
+  <!-- FINDING US -->
+  <div class="card">
+    <h2>Finding us</h2>
+    <p class="hint">One short walk from each landmark, in your own words. This is the part Google can't get from your address.</p>
+    <div class="warnbox" id="lmWarn" hidden>
+      <b>Walk each of these yourself once before launch</b> and rewrite the sentence in your own words.
+      If you say 3 minutes and it's 6, that's the worst moment to be wrong. When they're all correct,
+      untick the box below.
+    </div>
+    <div class="chk"><input type="checkbox" id="f_lmDraft"><label for="f_lmDraft" style="margin:0">These directions are still drafts</label></div>
+    <label>Line above the list</label><input type="text" id="f_lmLead">
+    <label>Standing note about walk times</label><input type="text" id="f_rcHedge">
+    <div id="lmBox" style="margin-top:.9rem"></div>
+    <button class="b-add b-sm" id="addLm">+ Add a landmark</button>
+    <label>Text used when someone shares the page</label><input type="text" id="f_rcShare">
   </div>
 
   <!-- ORDER LINKS -->
@@ -195,6 +330,8 @@ textarea{min-height:74px;resize:vertical}
     <div id="amBox"></div>
   </div>
 
+  <div class="warnbox" id="pubBlock" hidden></div>
+
   <div class="pubbox" id="pubbox">
     <p id="pubmsg"></p>
   </div>
@@ -205,7 +342,13 @@ textarea{min-height:74px;resize:vertical}
 <script src="content.js"></script>
 <script>
 (function(){
-  var KEY='sg_content_v1', PUB='sg_published_v1', PIN='2024';
+  /* P0 — the edit secret is NEVER in this file. It lives in the Worker; this
+     page only holds whatever the owner typed, for this browser session, and
+     every write sends it as X-Edit-Pin. A 401/403 clears it and re-locks. */
+  var KEY='sg_content_v1', PUB='sg_published_v1';
+  var PIN=null;
+  try{ PIN=sessionStorage.getItem('sg_pin')||null; }catch(e){}
+  function needPin(){ if(!PIN){ $('gate').style.display='flex'; return false; } return true; }
   var PHOTO_OPTS='<option value="">No photo</option><option value="photos/web/gyro.jpg">Gyro</option><option value="photos/web/cheesesteak.jpg">Cheesesteak / melt</option><option value="photos/web/wings.jpg">Wings</option><option value="photos/web/burger.jpg">Burger</option><option value="photos/web/fries.jpg">Fries</option><option value="photos/web/wrap.jpg">Wrap</option><option value="photos/web/salad.jpg">Salad</option><option value="photos/web/tenders.jpg">Chicken tenders</option><option value="photos/web/onionrings.jpg">Onion rings</option><option value="photos/web/cheesecake.jpg">Cheesecake</option><option value="photos/web/smoothie.jpg">Smoothie / shake</option><option value="photos/web/coffee.jpg">Coffee</option>';
   function photoField(kind,i,cur){
     var known = PHOTO_OPTS.indexOf('value="'+cur+'"')>-1;
@@ -218,17 +361,53 @@ textarea{min-height:74px;resize:vertical}
   var API='https://bricklight-content.eminetinoco.workers.dev', SITE='southern-grill';
   var $=function(i){return document.getElementById(i)};
   function deep(o){return JSON.parse(JSON.stringify(o))}
+  /* ══════════════════════════════════════════════════════════════════════════
+     WHAT THE EDITOR IS LOOKING AT
+     S is defaults <- LIVE published document <- this device's unpublished draft,
+     in that order, and it is not built until the live document has arrived.
+     It used to be defaults <- draft, with the live document never read at all:
+     on any device that had never saved a draft (a new phone, a cleared cache,
+     the other partner's laptop) every field showed the SHIPPED DEFAULTS while
+     claiming to show the site, and Publish - which copies every top-level key
+     of S over the live doc - then reverted prices, hours, menu edits and
+     landmark directions in one press. The stale-draft banner did not fire
+     either, because it keyed on sg_draft_at, which does not exist there.
+     LIVE is kept separately: the Right Now card reads and writes the SITE, not
+     the draft, so it must never be built from S.
+     ══════════════════════════════════════════════════════════════════════════ */
   var S = deep(window.SG_DEFAULT);
-  try{ var raw=localStorage.getItem(KEY); if(raw){ var sv=JSON.parse(raw); for(var k in sv) S[k]=sv[k]; } }catch(e){}
+  var LIVE = null;            // last known published document, or null
+  var BOOTED = false;         // true once S has been built from live or the cache
+  var SOURCE = '';            // 'live' | 'cache' | 'defaults'
+  function liveDoc(){ return LIVE || S; }
+  function isDoc(x){ return !!x && typeof x === 'object' && !Array.isArray(x); }
 
-  /* ---- gate */
-  function unlock(){ $('gate').style.display='none'; try{sessionStorage.setItem('sg_admin','1')}catch(e){} }
-  try{ if(sessionStorage.getItem('sg_admin')==='1') unlock(); }catch(e){}
+  function buildS(live){
+    S = deep(window.SG_DEFAULT);
+    if(isDoc(live)){ LIVE = live; for(var k in live) S[k]=live[k]; }
+    try{ var raw=localStorage.getItem(KEY); if(raw){ var sv=JSON.parse(raw);
+      if(isDoc(sv)) for(var k2 in sv) S[k2]=sv[k2]; } }catch(e){}
+  }
+
+  /* ---- gate. Nothing is verified here, because a client-side secret cannot be.
+     The Worker is the only thing that can say yes or no. */
+  if(PIN) $('gate').style.display='none';
   $('pinGo').onclick=function(){
-    if($('pin').value.trim()===PIN) unlock();
-    else { $('pinErr').textContent='Wrong PIN — try again.'; $('pin').value=''; }
+    var v=$('pin').value.trim();
+    if(v.length<4){ $('pinErr').textContent='Enter your PIN.'; return; }
+    PIN=v; try{ sessionStorage.setItem('sg_pin',v); sessionStorage.setItem('sg_admin','1'); }catch(e){}
+    $('gate').style.display='none'; $('pinErr').textContent='';
+    /* the prune could not persist without a PIN, so run it again now */
+    if(BOOTED) pruneSoldOut();
   };
   $('pin').addEventListener('keydown',function(e){ if(e.key==='Enter') $('pinGo').click(); });
+  ['f_rcOs','f_rcOe'].forEach(function(id){
+    var el=$(id); if(el) el.addEventListener('change', checkOrderWindow); });
+  $('hoursBox').addEventListener('change', function(){ readHours(); });
+  function authFail(){
+    PIN=null; try{ sessionStorage.removeItem('sg_pin'); }catch(e){}
+    $('gate').style.display='flex'; $('pinErr').textContent='That PIN was rejected. Try again.';
+  }
 
   function toast(msg){ var t=$('toast'); t.textContent=msg; t.style.display='block';
     clearTimeout(t._h); t._h=setTimeout(function(){t.style.display='none'},2200); }
@@ -240,14 +419,45 @@ textarea{min-height:74px;resize:vertical}
     f_a1:['meta','address1'], f_a2:['meta','address2'], f_place:['meta','place'], f_price:['meta','priceRange'],
     f_score:['rating','score'], f_count:['rating','count'], f_quote:['rating','quote'], f_quoteBy:['rating','quoteBy'],
     f_hsum:['hoursSummary'], f_menuNote:['menuNote'], f_lovedNote:['lovedNote'],
-    f_anncText:['announcement','text']
+    f_anncText:['announcement','text'],
+    f_rcPhrase:['readyClock','readyPhrase'], f_rcClosed:['readyClock','orderClosedText'],
+    f_rcSoon:['readyClock','openSoonText'],  f_rcShut:['readyClock','closedText'],
+    f_rcOs:['readyClock','orderStart'],      f_rcOe:['readyClock','orderEnd'],
+    f_rcHedge:['readyClock','walkHedge'],    f_rcShare:['readyClock','shareText'],
+    f_lmLead:['landmarksLead'],
+    f_seoBrand:['seo','brandName'], f_seoUrl:['seo','siteUrl'],
+    f_seoLat:['seo','lat'], f_seoLng:['seo','lng'], f_seoGmap:['seo','googleMapsUrl'],
+    f_seoParent:['seo','parentName'], f_seoParentUrl:['seo','parentUrl'],
+    f_seoPayment:['seo','payment']
   };
   function loadFields(){
+    /* A doc published by an older admin has none of these keys. Fall back to the
+       shipped defaults BEFORE the map loop touches S.readyClock / S.seo. */
+    if(!S.readyClock) S.readyClock = deep(window.SG_DEFAULT.readyClock);
+    if(!S.landmarks)  S.landmarks  = deep(window.SG_DEFAULT.landmarks);
+    if(!S.soldOut)    S.soldOut    = [];
+    if(!S.seo)        S.seo        = deep(window.SG_DEFAULT.seo);
+    if(!S.faq)        S.faq        = deep(window.SG_DEFAULT.faq);
+    if(S.landmarksLead==null) S.landmarksLead = window.SG_DEFAULT.landmarksLead;
+    if(!S.readyClock.status) S.readyClock.status = {mode:'',extraMinutes:0,setAt:'',expiresAt:''};
+
     for (var id in map){
       var p=map[id], v = p.length===2 ? S[p[0]][p[1]] : S[p[0]];
       if($(id)) $(id).value = v==null?'':v;
     }
     $('f_anncOn').checked = !!(S.announcement && S.announcement.on);
+    $('f_rcOn').checked   = S.readyClock.on !== false;
+    $('f_lmDraft').checked = !!S.landmarksDraft;
+    $('f_rcPrep').innerHTML = [10,12,15,20,25,30,40].map(function(v){
+      return '<option value="'+v+'">'+v+' minutes</option>'; }).join('');
+    $('f_rcLast').innerHTML = [0,10,15,20,30,45].map(function(v){
+      return '<option value="'+v+'">'+(v?v+' minutes before':'right up to closing')+'</option>'; }).join('');
+    $('f_rcPrep').value = String(S.readyClock.prepMinutes||20);
+    /* NOT `|| 20`: 0 is the "right up to closing" option, and `0 || 20` made the
+       dropdown snap back to "20 minutes before" every time the page reloaded,
+       so the owner could not even see that his choice had not taken. */
+    $('f_rcLast').value = String(S.readyClock.lastOrderMinutes==null?20:S.readyClock.lastOrderMinutes);
+    $('f_seoOwnPhotos').checked = !!(S.seo && S.seo.ownPhotos);
   }
   function readFields(){
     for (var id in map){
@@ -255,22 +465,74 @@ textarea{min-height:74px;resize:vertical}
       if(p.length===2) S[p[0]][p[1]]=$(id).value; else S[p[0]]=$(id).value;
     }
     S.announcement.on = $('f_anncOn').checked;
+    S.readyClock.on = $('f_rcOn').checked;
+    S.readyClock.prepMinutes      = parseInt($('f_rcPrep').value,10)||20;
+    var _l = parseInt($('f_rcLast').value,10);          // 0 must survive
+    S.readyClock.lastOrderMinutes = isFinite(_l) ? _l : 20;
+    checkOrderWindow();
   }
 
-  /* ---- hours */
+  /* ---- validation. Both of these are reachable from the two <input type="time">
+     boxes above, and both used to be silently reinterpreted rather than
+     refused, so the owner had no way to know. */
+  var ERR = { hours:'', window:'' };
+  function checkHours(){
+    var bad=[];
+    (S.hours||[]).forEach(function(h){
+      if(h.closed) return;
+      if(h.open && h.close && h.open===h.close) bad.push(h.day);
+    });
+    ERR.hours = bad.length
+      ? 'Opening and closing time are the same on '+bad.join(', ')+'. Set a real closing time, '+
+        'or tick Closed — the website cannot work out your hours from two identical times.'
+      : '';
+    $('hoursErr').textContent = ERR.hours; $('hoursErr').hidden = !ERR.hours;
+    refreshPublish();
+  }
+  function checkOrderWindow(){
+    var a=$('f_rcOs').value, b=$('f_rcOe').value, msg='';
+    if(!!a !== !!b) msg = 'Fill in BOTH online-ordering times or neither. One on its own does nothing.';
+    else if(a && b && b<=a) msg = 'Online ordering stops before it starts. If you meant "'+b+' to '+a+
+      '", swap the two boxes. Leave both empty to follow your normal kitchen hours.';
+    ERR.window = msg;
+    $('ordWinErr').textContent = msg; $('ordWinErr').hidden = !msg;
+    refreshPublish();
+  }
+  function refreshPublish(){
+    var why = '';
+    if(!BOOTED || SOURCE==='defaults')
+      why = 'Publish is off until this editor has loaded what is on your website. '+
+            'Publishing now would overwrite the live site with the original setup text. '+
+            'Check your connection and reload the page.';
+    else if(ERR.hours || ERR.window)
+      why = 'Fix the highlighted problem above before publishing.';
+    $('pubBlock').textContent = why; $('pubBlock').hidden = !why;
+    $('publish').disabled = !!why;
+  }
+
+  /* ---- hours: the two time boxes are the source of truth for every clock on
+     the site; the text box is only how it reads to a customer. */
   function drawHours(){
     $('hoursBox').innerHTML = S.hours.map(function(h,i){
-      return '<div class="hourrow"><span class="dn">'+h.day+'</span>'+
-        '<input type="text" data-h="'+i+'" value="'+(h.text||'').replace(/"/g,'&quot;')+'" '+(h.closed?'disabled':'')+'>'+
+      return '<div class="hourrow2">'+
+        '<span class="dn">'+h.day+'</span>'+
+        '<input type="time" data-ho="'+i+'" value="'+(h.open||'')+'" '+(h.closed?'disabled':'')+'>'+
+        '<span class="dash">to</span>'+
+        '<input type="time" data-hcl="'+i+'" value="'+(h.close||'')+'" '+(h.closed?'disabled':'')+'>'+
+        '<input type="text" data-h="'+i+'" value="'+(h.text||'').replace(/"/g,'&quot;')+'" placeholder="how it reads on the site" '+(h.closed?'disabled':'')+'>'+
         '<label style="margin:0;display:flex;align-items:center;gap:.35rem;font-size:.8rem">'+
-        '<input type="checkbox" data-hc="'+i+'" '+(h.closed?'checked':'')+' style="width:16px;height:16px">Closed</label></div>';
+        '<input type="checkbox" data-hc="'+i+'" '+(h.closed?'checked':'')+' style="width:16px;height:16px">Closed</label>'+
+        '</div>';
     }).join('');
     $('hoursBox').querySelectorAll('[data-hc]').forEach(function(c){
-      c.onchange=function(){ S.hours[+c.dataset.hc].closed=c.checked; drawHours(); };
+      c.onchange=function(){ readHours(); S.hours[+c.dataset.hc].closed=c.checked; drawHours(); };
     });
   }
   function readHours(){
-    $('hoursBox').querySelectorAll('[data-h]').forEach(function(inp){ S.hours[+inp.dataset.h].text=inp.value; });
+    $('hoursBox').querySelectorAll('[data-h]').forEach(function(x){ S.hours[+x.dataset.h].text=x.value; });
+    $('hoursBox').querySelectorAll('[data-ho]').forEach(function(x){ S.hours[+x.dataset.ho].open=x.value; });
+    $('hoursBox').querySelectorAll('[data-hcl]').forEach(function(x){ S.hours[+x.dataset.hcl].close=x.value; });
+    checkHours();
   }
 
   /* ---- order platforms */
@@ -282,6 +544,13 @@ textarea{min-height:74px;resize:vertical}
         '<div class="row c2"><div><label>Name</label><input type="text" data-ol="'+i+'" value="'+(o.label||'').replace(/"/g,'&quot;')+'"></div>'+
         '<div><label>Small text</label><input type="text" data-os="'+i+'" value="'+(o.sub||'').replace(/"/g,'&quot;')+'"></div></div>'+
         '<label>Link</label><input type="url" data-ou="'+i+'" value="'+(o.url||'').replace(/"/g,'&quot;')+'" placeholder="https://...">'+
+        /* A radio group, not a checkbox: exactly one platform can be the direct
+           one, which is the invariant the site already assumes when it takes
+           filter(isDirect)[0]. Without this the flag was not editable anywhere,
+           so removing the Clover row left the board permanently on "Call" with
+           no way back. */
+        '<div class="chk"><input type="radio" name="ordDirect" id="odir'+i+'" data-odir="'+i+'" '+(o.direct?'checked':'')+'>'+
+          '<label for="odir'+i+'" style="margin:0">This is <b>our own</b> ordering page (no app fees)</label></div>'+
         '</div>';
     }).join('');
     $('ordBox').querySelectorAll('[data-od]').forEach(function(b){
@@ -293,8 +562,9 @@ textarea{min-height:74px;resize:vertical}
     $('ordBox').querySelectorAll('[data-os]').forEach(function(x){ S.order[+x.dataset.os].sub=x.value; });
     $('ordBox').querySelectorAll('[data-ou]').forEach(function(x){ S.order[+x.dataset.ou].url=x.value; });
     $('ordBox').querySelectorAll('[data-oon]').forEach(function(x){ S.order[+x.dataset.oon].on=x.checked; });
+    $('ordBox').querySelectorAll('[data-odir]').forEach(function(x){ S.order[+x.dataset.odir].direct=x.checked; });
   }
-  $('addOrd').onclick=function(){ readOrd(); S.order.push({on:true,key:'other',label:'New platform',sub:'Delivery',url:''}); drawOrd(); };
+  $('addOrd').onclick=function(){ readOrd(); S.order.push({on:true,key:'other',direct:false,label:'New platform',sub:'Delivery',url:''}); drawOrd(); };
 
   /* ---- menu */
   function catOptions(){
@@ -342,7 +612,9 @@ textarea{min-height:74px;resize:vertical}
   $('addItem').onclick=function(){
     readMenu();
     var f=$('menuFilter').value; if(f==='all') f=S.categories[1].key;
-    S.menu.push({c:f,n:'New item',p:'0.00',d:'',badge:''});
+    /* Give it a frozen id at birth: sold-out marks are keyed on the id, so a
+       later rename must not move it. */
+    S.menu.push({c:f,id:'m-'+Date.now(),n:'New item',p:'0.00',d:'',badge:'',img:''});
     drawMenu(); window.scrollTo(0,document.body.scrollHeight*0.6);
   };
 
@@ -407,7 +679,238 @@ textarea{min-height:74px;resize:vertical}
     $('amBox').querySelectorAll('[data-ax]').forEach(function(x){ S.amenities[+x.dataset.ax].x=x.value; });
   }
 
-  function readAll(){ readFields(); readHours(); readOrd(); readMenu(); readLoved(); readRev(); readAm(); }
+  /* ---- landmarks (wayfinding) */
+  var WALKS=['about 2 min','about 3 min','about 4 min','about 5 min','about 6 min','about 8 min','about 10 min'];
+  function drawLm(){
+    $('lmWarn').hidden = !S.landmarksDraft;
+    $('lmBox').innerHTML = (S.landmarks||[]).map(function(x,i){
+      return '<div class="item"><div class="head"><strong>'+(x.name||'Landmark')+'</strong>'+
+        '<button class="b-del b-sm" data-lmd="'+i+'">Remove</button></div>'+
+        '<div class="row c2"><div><label>Landmark name</label>'+
+          '<input type="text" data-lmn="'+i+'" value="'+(x.name||'').replace(/"/g,'&quot;')+'"></div>'+
+        '<div><label>Walk time</label><select data-lmw="'+i+'">'+
+          WALKS.map(function(w){return '<option value="'+w+'">'+w+'</option>';}).join('')+'</select></div></div>'+
+        '<label>Your walking directions (plain English, say "about")</label>'+
+        '<textarea data-lmx="'+i+'">'+String(x.dir||'').replace(/</g,'&lt;')+'</textarea>'+
+        '<div class="chk"><input type="checkbox" data-lmf="'+i+'" '+(x.first?'checked':'')+
+          '>Show this one first</div></div>';
+    }).join('');
+    $('lmBox').querySelectorAll('[data-lmw]').forEach(function(s){
+      var cur=S.landmarks[+s.dataset.lmw].walk||'';
+      s.value = WALKS.indexOf(cur)>-1 ? cur : 'about 5 min';
+    });
+    $('lmBox').querySelectorAll('[data-lmd]').forEach(function(b){
+      b.onclick=function(){ readLm(); S.landmarks.splice(+b.dataset.lmd,1); drawLm(); };
+    });
+  }
+  function readLm(){
+    $('lmBox').querySelectorAll('[data-lmn]').forEach(function(x){ S.landmarks[+x.dataset.lmn].name=x.value; });
+    $('lmBox').querySelectorAll('[data-lmw]').forEach(function(x){ S.landmarks[+x.dataset.lmw].walk=x.value; });
+    $('lmBox').querySelectorAll('[data-lmx]').forEach(function(x){ S.landmarks[+x.dataset.lmx].dir=x.value; });
+    $('lmBox').querySelectorAll('[data-lmf]').forEach(function(x){ S.landmarks[+x.dataset.lmf].first=x.checked; });
+    S.landmarksDraft = $('f_lmDraft').checked;
+  }
+  $('addLm').onclick=function(){
+    readLm();
+    S.landmarks.push({id:'lm-'+Date.now(), name:'New landmark', walk:'about 5 min', dir:'', first:false});
+    drawLm();
+  };
+
+  /* ---- search & listings */
+  function drawSeo(){
+    S.seo = S.seo || {}; S.seo.features = S.seo.features || [];
+    $('f_seoCuisines').value = (S.seo.cuisines||[]).join(', ');
+    $('seoFeatBox').innerHTML = S.seo.features.map(function(f,i){
+      return '<div class="chk"><input type="checkbox" id="sf'+i+'" data-sf="'+i+'"'+(f.on?' checked':'')+'>'+
+             '<label for="sf'+i+'" style="margin:0">'+f.name+'</label></div>'; }).join('');
+  }
+  function readSeo(){
+    S.seo = S.seo || {};
+    S.seo.cuisines = $('f_seoCuisines').value.split(',')
+      .map(function(x){return x.trim();}).filter(Boolean);
+    $('seoFeatBox').querySelectorAll('[data-sf]').forEach(function(c){
+      S.seo.features[+c.dataset.sf].on = c.checked; });
+    S.seo.ownPhotos = $('f_seoOwnPhotos').checked;
+  }
+
+  /* ---- common questions */
+  function drawFaq(){
+    S.faq = S.faq || [];
+    $('faqBox').innerHTML = S.faq.map(function(f,i){
+      return '<div class="item"><input type="text" data-fq="'+i+'" value="'+
+        String(f.q).replace(/"/g,'&quot;')+'" placeholder="Question">'+
+        '<textarea data-fx="'+i+'" placeholder="Answer">'+
+        String(f.x).replace(/</g,'&lt;')+'</textarea>'+
+        '<button class="b-del b-sm" data-fd="'+i+'">Remove</button></div>'; }).join('');
+    $('faqBox').querySelectorAll('[data-fd]').forEach(function(b){
+      b.onclick=function(){ readFaq(); S.faq.splice(+b.dataset.fd,1); drawFaq(); }; });
+  }
+  function readFaq(){
+    $('faqBox').querySelectorAll('[data-fq]').forEach(function(x){ S.faq[+x.dataset.fq].q=x.value; });
+    $('faqBox').querySelectorAll('[data-fx]').forEach(function(x){ S.faq[+x.dataset.fx].x=x.value; });
+  }
+  $('addFaq').onclick=function(){ readFaq(); S.faq.push({q:'',x:''}); drawFaq(); };
+
+  /* ══════════════════════════════════════════════════════════════════════════
+     RIGHT NOW quick card — merge-PUT. It GETs the live doc, splices in ONLY the
+     keys it touched, and PUTs that back. It never reads or writes the draft, so
+     a half-finished edit sitting in localStorage cannot go live by accident.
+     ══════════════════════════════════════════════════════════════════════════ */
+  var PRESETS = {
+    quiet:{extra:0,mins:60,label:'Quiet'}, busy:{extra:10,mins:90,label:'Busy'},
+    slammed:{extra:20,mins:60,label:'Slammed'}, closing:{extra:0,mins:90,label:'Closing early'}
+  };
+  var QUICK_TOUCHED = false;
+
+  /* `build` is a FUNCTION of the freshly fetched live document, not a ready-made
+     patch. It used to take a patch computed from S - the draft - so tapping
+     Busy published the draft's whole readyClock object: unsaved changes to
+     prepMinutes, to the ordering window, to the closed-ordering text, and an
+     unticked "Show the panel" box all went live with it. Marking one dish sold
+     out did the same to soldOut and wiped every mark another device had made
+     that day. Returning null from `build` means "nothing to do" and sends
+     nothing. */
+  function quickPut(build, label){
+    if(!needPin()) return;
+    var btns=document.querySelectorAll('#quickCard .q');
+    [].forEach.call(btns,function(b){b.disabled=true;});
+    fetch(API+'/c/'+SITE,{cache:'no-store'})
+      .then(function(r){ return r.ok ? r.json() : null; })
+      .then(function(live){
+        var doc = isDoc(live) ? live : deep(window.SG_DEFAULT);   // GET the live doc
+        if(isDoc(live)) LIVE = live;
+        var patch = build(doc);
+        if(!patch){ var skip=new Error('skip'); skip.skip=true; throw skip; }
+        for(var k in patch) doc[k]=patch[k];                // splice ONLY the touched keys
+        doc.publishedAt = new Date().toISOString();
+        return fetch(API+'/c/'+SITE,{method:'PUT',
+          headers:{'Content-Type':'application/json','X-Edit-Pin':PIN}, body:JSON.stringify(doc)})
+          .then(function(r){
+            if(r.status===401||r.status===403){ authFail(); var e=new Error('pin'); e.auth=true; throw e; }
+            if(!r.ok) throw new Error('http');
+            QUICK_TOUCHED = true;
+            LIVE = doc;                                     // this IS the site now
+            for(var k2 in patch) S[k2]=deep(patch[k2]);     // keep the open editor in sync
+            try{ localStorage.setItem(PUB, JSON.stringify(doc)); }catch(e){}
+            drawQuick(); toast('✓ '+label+' — live now');
+          });
+      })
+      /* authFail() has already re-opened the gate and said the PIN was rejected;
+         a second toast saying the site is unreachable would contradict it. */
+      .catch(function(err){ if(err && (err.auth || err.skip)) return;
+                            toast('Could not reach the site — try again'); })
+      .then(function(){ [].forEach.call(btns,function(b){b.disabled=false;}); });
+  }
+
+  function setStatus(mode){
+    quickPut(function(live){
+      /* only the status field is spliced onto whatever readyClock the SITE has */
+      var rc = deep((live && live.readyClock) || S.readyClock || window.SG_DEFAULT.readyClock);
+      if(!mode){ rc.status={mode:'',extraMinutes:0,setAt:'',expiresAt:''}; }
+      else {
+        var p=PRESETS[mode], now=new Date();
+        rc.status={ mode:mode, extraMinutes:p.extra, setAt:now.toISOString(),
+                    expiresAt:new Date(now.getTime()+p.mins*60000).toISOString() };  // absolute
+      }
+      return {readyClock:rc};
+    }, mode?PRESETS[mode].label:'Cleared');
+  }
+
+  function todayKey(){
+    try{ return new Intl.DateTimeFormat('en-CA',{timeZone:'America/New_York',
+      year:'numeric',month:'2-digit',day:'2-digit'}).format(new Date()); }
+    catch(e){ var d=new Date(); return d.getFullYear()+'-'+('0'+(d.getMonth()+1)).slice(-2)+'-'+('0'+d.getDate()).slice(-2); }
+  }
+  function mid(x){ return x.id || ('m-'+String(x.n||'').toLowerCase().replace(/[^a-z0-9]+/g,'-').replace(/^-|-$/g,'')); }
+  /* The live document is the truth about STATE (which status is showing, what is
+     marked sold out). It is not always the truth about the CATALOGUE: a document
+     published by an older admin can have no `menu` key at all, and reading the
+     menu straight off it emptied the sold-out picker so nothing could be marked.
+     Prefer the live menu, fall back to the merged editor copy, which always has
+     one because it starts from the shipped defaults. */
+  function menuOf(doc){
+    if(doc && doc.menu && doc.menu.length) return doc.menu;
+    if(LIVE && LIVE.menu && LIVE.menu.length) return LIVE.menu;
+    return S.menu || [];
+  }
+  function nameFor(id, doc){ var a=menuOf(doc);
+    for(var i=0;i<a.length;i++) if(mid(a[i])===id) return a[i].n; return null; }
+
+  /* Everything in this card describes the SITE, so it is drawn from the live
+     document. Drawn from S it told an owner "Nothing showing - the site reads
+     normal" while his partner's phone had the site telling customers there was
+     a 20-minute wait. */
+  function drawQuick(){
+    var LD=liveDoc();
+    var st=(LD.readyClock&&LD.readyClock.status)||{}, exp=Date.parse(st.expiresAt||'');
+    var live = st.mode && PRESETS[st.mode] && isFinite(exp) && exp>Date.now();
+    document.querySelectorAll('#quickCard .q').forEach(function(b){
+      b.classList.toggle('on', live ? b.dataset.q===st.mode : b.dataset.q===''); });
+    $('qNow').textContent = live
+      ? PRESETS[st.mode].label+' — showing on the site, clears itself at '+
+        new Date(exp).toLocaleTimeString([], {hour:'numeric',minute:'2-digit'})
+      : 'Nothing showing — the site reads normal.';
+
+    var tk=todayKey(), marks=(LD.soldOut||[]).filter(function(x){return x.date===tk && nameFor(x.id, LD);});
+    $('qSold').innerHTML = marks.length
+      ? marks.map(function(x){ return '<div class="qrow"><span>'+nameFor(x.id)+
+          '</span><button class="b-del b-sm" data-so="'+x.id+'">Back on</button></div>'; }).join('')
+      : '<p class="hint" style="margin:0">Nothing marked sold out.</p>';
+    $('qSold').querySelectorAll('[data-so]').forEach(function(b){
+      b.onclick=function(){
+        quickPut(function(live){          // filter the SITE's list, not this device's
+          return {soldOut:((live&&live.soldOut)||[]).filter(function(x){
+            return !(x.id===b.dataset.so && x.date===tk); })};
+        }, nameFor(b.dataset.so, LD)+' back on');
+      };
+    });
+    var taken={}; marks.forEach(function(x){taken[x.id]=1;});
+    $('qSoldPick').innerHTML = menuOf(LD).filter(function(x){return !taken[mid(x)];})
+      .map(function(x){ return '<option value="'+mid(x)+'">'+x.n+'</option>'; }).join('');
+  }
+
+  document.querySelectorAll('#quickCard .q').forEach(function(b){
+    b.onclick=function(){ setStatus(b.dataset.q); };
+  });
+  $('qSoldAdd').onclick=function(){
+    var id=$('qSoldPick').value; if(!id) return;
+    quickPut(function(live){              // add to the SITE's list, not this device's
+      var a=((live&&live.soldOut)||[]).slice();
+      if(a.some(function(x){ return x.id===id && x.date===todayKey(); })) return null;
+      a.push({id:id, date:todayKey()});
+      return {soldOut:a};
+    }, nameFor(id)+' marked sold out');
+  };
+
+  /* Stale marks die on load — and say so, so the failure is never invisible.
+     This used to mutate S.soldOut only, which the very next Publish undid: the
+     owner was told the marks were cleared and the live site kept greying the
+     dish out. It now PUTs the pruned list, so the claim is true. */
+  function prunedList(doc){
+    var tk=todayKey(), keep=[], old=0, gone=0;
+    ((doc&&doc.soldOut)||[]).forEach(function(x){
+      if(!x||!x.id) { gone++; return; }
+      if(x.date!==tk){ old++; return; }
+      if(!nameFor(x.id, doc)){ gone++; return; }
+      keep.push(x);
+    });
+    return { keep:keep, old:old, gone:gone, dropped:old+gone };
+  }
+  function pruneSoldOut(){
+    var r = prunedList(liveDoc());
+    var msg=[];
+    if(r.old)  msg.push(r.old+' sold-out mark(s) from an earlier day cleared automatically.');
+    if(r.gone) msg.push(r.gone+' sold-out mark(s) dropped because that menu item no longer exists.');
+    $('qPruned').textContent = msg.join(' ');
+    if(r.dropped && PIN){
+      /* recomputed against whatever the site holds at PUT time, not this snapshot */
+      quickPut(function(live){ var q=prunedList(live); return q.dropped ? {soldOut:q.keep} : null; },
+               'Old sold-out marks cleared');
+    }
+  }
+
+  function readAll(){ readFields(); readHours(); readOrd(); readMenu(); readLoved(); readRev(); readAm();
+                      readLm(); readSeo(); readFaq(); }
 
   /* ---- actions */
   $('save').onclick=function(){
@@ -421,36 +924,124 @@ textarea{min-height:74px;resize:vertical}
     try{ localStorage.removeItem(KEY); }catch(e){}
     location.reload();
   };
+  /* Publish MERGES onto the live doc: keys the live site has and this (possibly
+     stale) editor doesn't will survive, and a mid-service Right Now tap is not
+     clobbered by someone pressing Publish an hour later. */
   $('publish').onclick=function(){
+    if(!needPin()) return;
     readAll();
-    try{ localStorage.setItem(KEY, JSON.stringify(S)); }catch(e){}
+    /* readAll() re-runs both validators; refreshPublish() has just re-disabled
+       the button if either failed, so re-check before sending. */
+    if(!BOOTED || SOURCE==='defaults' || ERR.hours || ERR.window){ refreshPublish();
+      $('pubBlock').scrollIntoView({behavior:'smooth'}); return; }
+    try{ localStorage.setItem(KEY, JSON.stringify(S)); localStorage.setItem('sg_draft_at', new Date().toISOString()); }catch(e){}
     var btn=$('publish'), old=btn.textContent;
     btn.disabled=true; btn.textContent='Publishing…';
-    $('pubbox').style.display='block';
-    $('pubmsg').innerHTML='Sending your changes to the website…';
-    fetch(API+'/c/'+SITE,{method:'PUT',headers:{'Content-Type':'application/json','X-Edit-Pin':PIN},
-      body:JSON.stringify(S)})
-      .then(function(r){ return r.json().then(function(j){ return {ok:r.ok,j:j}; }); })
-      .then(function(res){
-        btn.disabled=false; btn.textContent=old;
-        if(res.ok){
-          try{ localStorage.setItem(PUB, JSON.stringify(S)); localStorage.removeItem(KEY); }catch(e){}
-          $('pubmsg').innerHTML='✅ <b>Live now.</b> Everyone visiting the website sees these changes. '+
-            '<a href="index.html" style="color:#9ae6b4">Open the site</a>';
-          toast('✓ Published — it is live');
-        } else {
-          $('pubmsg').innerHTML='⚠️ Could not publish: '+(res.j&&res.j.error?res.j.error:'unknown error')+
-            '. Your changes are still saved on this device.';
+    $('pubbox').style.display='block'; $('pubmsg').textContent='Sending your changes to the website…';
+
+    fetch(API+'/c/'+SITE,{cache:'no-store'})
+      .then(function(r){ return r.ok?r.json():null; })
+      .then(function(live){
+        var doc = live ? deep(live) : {};
+        for(var k in S) doc[k]=S[k];                       // keys live has and S doesn't SURVIVE
+        if(!QUICK_TOUCHED && live){                        // don't clobber a mid-service tap
+          if(live.readyClock && live.readyClock.status && S.readyClock)
+            doc.readyClock.status = live.readyClock.status;
+          if(live.soldOut) doc.soldOut = live.soldOut;
         }
+        doc.publishedAt = new Date().toISOString();
+        doc.docVersion  = 2;
+        return fetch(API+'/c/'+SITE,{method:'PUT',
+          headers:{'Content-Type':'application/json','X-Edit-Pin':PIN}, body:JSON.stringify(doc)})
+          .then(function(r){
+            if(r.status===401||r.status===403){ authFail(); var e=new Error('pin'); e.auth=true; throw e; }
+            if(!r.ok) throw new Error('http');
+            try{ localStorage.setItem(PUB, JSON.stringify(doc)); localStorage.removeItem(KEY); }catch(e){}
+            $('pubmsg').innerHTML='✅ <b>Live now.</b> <a href="index.html" style="color:#9ae6b4">Open the site</a>';
+            toast('✓ Published — it is live');
+          });
       })
-      .catch(function(){
-        btn.disabled=false; btn.textContent=old;
-        $('pubmsg').innerHTML='⚠️ No connection. Your changes are saved on this device — press Publish again when you are back online.';
-      });
+      /* A rejected PIN used to show both "That PIN was rejected" on the gate AND
+         "Could not publish, try again" here - two contradictory messages, the
+         second inviting a retry that would fail the same way. */
+      .catch(function(err){
+        $('pubmsg').textContent = (err && err.auth)
+          ? 'Your PIN was rejected — enter it again above, then press Publish.'
+          : '⚠️ Could not publish. Your changes are still saved on this device — try again.';
+      })
+      .then(function(){ btn.disabled=false; btn.textContent=old; });
     $('pubbox').scrollIntoView({behavior:'smooth'});
   };
 
-  loadFields(); drawHours(); drawOrd(); drawFilter(); drawMenu(); drawLoved(); drawRev(); drawAm();
+  /* ══════════════════════════════════════════════════════════════════════════
+     BOOT. Nothing is drawn until S has been built, because drawing from the
+     defaults and re-drawing when the live document lands would throw away
+     anything the owner had already typed.
+     ══════════════════════════════════════════════════════════════════════════ */
+  function drawAll(){
+    loadFields(); drawHours(); drawOrd(); drawFilter(); drawMenu(); drawLoved(); drawRev(); drawAm();
+    drawLm(); drawSeo(); drawFaq(); drawQuick();
+    checkHours(); checkOrderWindow();
+  }
+
+  function boot(live, src){
+    if(BOOTED) return;
+    buildS(live);
+    SOURCE = src;
+    BOOTED = true;
+    $('boot').style.display='none';
+    drawAll();
+    pruneSoldOut();
+    refreshPublish();
+
+    if(src==='cache'){
+      warn('<b>Working from the last copy this device saw.</b> The website could not be reached, '+
+           'so what you see may be a little behind. Reload before you publish anything important.');
+    }
+    /* Stale-draft warning: the live site moved on after this device's last Save. */
+    if(src==='live' && live && live.publishedAt){
+      var d=null; try{ d=localStorage.getItem('sg_draft_at'); }catch(e){}
+      if(d && Date.parse(live.publishedAt) > Date.parse(d))
+        warn('<b>Heads up.</b> The live site was updated after your saved draft. '+
+             'Pressing Publish will overwrite it. Press <b>Undo all</b> first if you’re not sure.');
+    }
+  }
+  function warn(html){
+    var w=document.createElement('div'); w.className='warnbox'; w.innerHTML=html;
+    $('quickCard').parentNode.insertBefore(w, $('quickCard').nextSibling);
+  }
+
+  (function start(){
+    if(!window.fetch){ fallback(); return; }
+    var ctl = window.AbortController ? new AbortController() : null;
+    if(ctl) setTimeout(function(){ try{ctl.abort()}catch(e){} }, 10000);
+    fetch(API+'/c/'+SITE, ctl?{signal:ctl.signal, cache:'no-store'}:{cache:'no-store'})
+      .then(function(r){ return r.ok ? r.json() : null; })
+      .then(function(live){ if(isDoc(live)) boot(live,'live'); else fallback(); })
+      .catch(fallback);
+
+    function fallback(){
+      if(BOOTED) return;
+      var cached=null;
+      try{ cached=JSON.parse(localStorage.getItem(PUB)||'null'); }catch(e){}
+      if(isDoc(cached)) return boot(cached,'cache');
+      /* No live doc and no cache. The editor still opens so the owner can look
+         and Save locally, but Publish stays OFF: everything on screen is the
+         shipped setup text, and publishing it would wipe the real site. */
+      $('bootMsg').textContent = 'Could not reach your website.';
+      boot(null,'defaults');
+    }
+  })();
+
+  /* The quick card describes the site, so re-read it when the phone comes back
+     to this tab — someone else may have tapped Slammed in the meantime. */
+  document.addEventListener('visibilitychange', function(){
+    if(document.visibilityState!=='visible' || !BOOTED || !window.fetch) return;
+    fetch(API+'/c/'+SITE,{cache:'no-store'})
+      .then(function(r){ return r.ok?r.json():null; })
+      .then(function(live){ if(isDoc(live)){ LIVE=live; drawQuick(); } })
+      .catch(function(){});
+  });
 })();
 </script>
 </body>
