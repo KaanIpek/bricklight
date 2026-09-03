@@ -1,0 +1,74 @@
+[
+ {
+  "name": "gyro",
+  "file": "photos/web/gyro.jpg",
+  "source": "Say Souvlaki - chicken gyros wrap (Wikimedia Commons)",
+  "license": "CC0"
+ },
+ {
+  "name": "cheesesteak",
+  "file": "photos/web/cheesesteak.jpg",
+  "source": "Close up of layers of patty melt (Wikimedia Commons)",
+  "license": "CC0"
+ },
+ {
+  "name": "wings",
+  "file": "photos/web/wings.jpg",
+  "source": "Coast Guard buffalo chicken wings (Wikimedia Commons)",
+  "license": "Public domain"
+ },
+ {
+  "name": "burger",
+  "file": "photos/web/burger.jpg",
+  "source": "Cheeseburger.jpg (Wikimedia Commons)",
+  "license": "Public domain"
+ },
+ {
+  "name": "fries",
+  "file": "photos/web/fries.jpg",
+  "source": "French fries plate (Wikimedia Commons)",
+  "license": "Public domain"
+ },
+ {
+  "name": "wrap",
+  "file": "photos/web/wrap.jpg",
+  "source": "Chicken Shawarma Wrap - Lavash (Wikimedia Commons)",
+  "license": "CC0"
+ },
+ {
+  "name": "salad",
+  "file": "photos/web/salad.jpg",
+  "source": "Caesar salad with chicken, Cambridge MA (Wikimedia Commons)",
+  "license": "CC0"
+ },
+ {
+  "name": "tenders",
+  "file": "photos/web/tenders.jpg",
+  "source": "Black Bear Diner chicken tenders (Wikimedia Commons)",
+  "license": "CC0"
+ },
+ {
+  "name": "onionrings",
+  "file": "photos/web/onionrings.jpg",
+  "source": "Onion rings - Honest Burgers (Wikimedia Commons)",
+  "license": "CC0"
+ },
+ {
+  "name": "cheesecake",
+  "file": "photos/web/cheesecake.jpg",
+  "source": "Chocolate Profiterole Cheesecake - Caffe Nero (Wikimedia Commons)",
+  "license": "CC0"
+ },
+ {
+  "name": "smoothie",
+  "file": "photos/web/smoothie.jpg",
+  "source": "Strawberry milk shake (Wikimedia Commons)",
+  "license": "Public domain"
+ },
+ {
+  "name": "coffee",
+  "file": "photos/web/coffee.jpg",
+  "source": "Coffee cup surrounded by coffee beans (Wikimedia Commons)",
+  "license": "CC0"
+ }
+]

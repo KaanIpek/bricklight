@@ -164,7 +164,7 @@ textarea{min-height:74px;resize:vertical}
   <!-- MENU -->
   <div class="card">
     <h2>Menu</h2>
-    <p class="hint">Price can be a number (10.99) or the word <b>ask</b> to show "ask in store". Badge is the little red tag.</p>
+    <p class="hint">Price can be a number (10.99) or the word <b>ask</b> to show "ask in store". Badge is the little red tag. <b>Photo:</b> pick one of ours, or paste a link to your own photo (right-click a photo on Google Photos / Instagram &rarr; Copy image address).</p>
     <label>Filter by category</label>
     <select id="menuFilter"></select>
     <div id="menuBox" style="margin-top:.9rem"></div>
@@ -206,6 +206,15 @@ textarea{min-height:74px;resize:vertical}
 <script>
 (function(){
   var KEY='sg_content_v1', PUB='sg_published_v1', PIN='2024';
+  var PHOTO_OPTS='<option value="">No photo</option><option value="photos/web/gyro.jpg">Gyro</option><option value="photos/web/cheesesteak.jpg">Cheesesteak / melt</option><option value="photos/web/wings.jpg">Wings</option><option value="photos/web/burger.jpg">Burger</option><option value="photos/web/fries.jpg">Fries</option><option value="photos/web/wrap.jpg">Wrap</option><option value="photos/web/salad.jpg">Salad</option><option value="photos/web/tenders.jpg">Chicken tenders</option><option value="photos/web/onionrings.jpg">Onion rings</option><option value="photos/web/cheesecake.jpg">Cheesecake</option><option value="photos/web/smoothie.jpg">Smoothie / shake</option><option value="photos/web/coffee.jpg">Coffee</option>';
+  function photoField(kind,i,cur){
+    var known = PHOTO_OPTS.indexOf('value="'+cur+'"')>-1;
+    return '<label>Photo</label><div class="row c2">'+
+      '<select data-'+kind+'ph="'+i+'">'+PHOTO_OPTS+'</select>'+
+      '<input type="url" data-'+kind+'pu="'+i+'" placeholder="or paste a photo link" value="'+
+        ((cur && !known)?String(cur).replace(/"/g,'&quot;'):'')+'">'+
+      '</div>';
+  }
   var API='https://bricklight-content.eminetinoco.workers.dev', SITE='southern-grill';
   var $=function(i){return document.getElementById(i)};
   function deep(o){return JSON.parse(JSON.stringify(o))}
@@ -306,9 +315,14 @@ textarea{min-height:74px;resize:vertical}
         '<label>Description</label><input type="text" data-mdsc="'+i+'" value="'+(x.d||'').replace(/"/g,'&quot;')+'">'+
         '<div class="row c2"><div><label>Category</label><select data-mc="'+i+'">'+catOptions()+'</select></div>'+
         '<div><label>Badge (optional)</label><input type="text" data-mb="'+i+'" value="'+(x.badge||'').replace(/"/g,'&quot;')+'"></div></div>'+
+        photoField('m', i, x.img||'')+
         '</div>';
     }).join('');
     $('menuBox').querySelectorAll('[data-mc]').forEach(function(s){ s.value=S.menu[+s.dataset.mc].c; });
+    $('menuBox').querySelectorAll('[data-mph]').forEach(function(s){
+      var cur=S.menu[+s.dataset.mph].img||'';
+      s.value = (PHOTO_OPTS.indexOf('value="'+cur+'"')>-1) ? cur : '';
+    });
     $('menuBox').querySelectorAll('[data-md]').forEach(function(b){
       b.onclick=function(){ readMenu(); S.menu.splice(+b.dataset.md,1); drawMenu(); };
     });
@@ -319,6 +333,10 @@ textarea{min-height:74px;resize:vertical}
     $('menuBox').querySelectorAll('[data-mdsc]').forEach(function(x){ S.menu[+x.dataset.mdsc].d=x.value; });
     $('menuBox').querySelectorAll('[data-mb]').forEach(function(x){ S.menu[+x.dataset.mb].badge=x.value; });
     $('menuBox').querySelectorAll('[data-mc]').forEach(function(x){ S.menu[+x.dataset.mc].c=x.value; });
+    $('menuBox').querySelectorAll('[data-mpu]').forEach(function(x){
+      var i=+x.dataset.mpu, sel=$('menuBox').querySelector('[data-mph="'+i+'"]');
+      S.menu[i].img = x.value.trim() ? x.value.trim() : (sel?sel.value:'');
+    });
   }
   $('menuFilter').onchange=function(){ readMenu(); drawMenu(); };
   $('addItem').onclick=function(){
@@ -335,10 +353,22 @@ textarea{min-height:74px;resize:vertical}
         '<div><label>Dish</label><input type="text" data-ln="'+i+'" value="'+(l.name||'').replace(/"/g,'&quot;')+'"></div>'+
         '<div><label>Mentioned in how many reviews</label><input type="text" data-lc="'+i+'" value="'+(l.count||'')+'"></div></div>'+
         '<label>Rank label</label><input type="text" data-lr="'+i+'" value="'+(l.rank||'').replace(/"/g,'&quot;')+'">'+
-        '<label>Description</label><textarea data-ld="'+i+'">'+(l.desc||'')+'</textarea></div>';
+        '<label>Description</label><textarea data-ld="'+i+'">'+(l.desc||'')+'</textarea>'+
+        photoField('l', i, l.img||'')+'</div>';
     }).join('');
+    drawLovedPhotos();
+  }
+  function drawLovedPhotos(){
+    $('lovedBox').querySelectorAll('[data-lph]').forEach(function(s){
+      var cur=S.loved[+s.dataset.lph].img||'';
+      s.value = (PHOTO_OPTS.indexOf('value="'+cur+'"')>-1) ? cur : '';
+    });
   }
   function readLoved(){
+    $('lovedBox').querySelectorAll('[data-lpu]').forEach(function(x){
+      var i=+x.dataset.lpu, sel=$('lovedBox').querySelector('[data-lph="'+i+'"]');
+      S.loved[i].img = x.value.trim() ? x.value.trim() : (sel?sel.value:'');
+    });
     $('lovedBox').querySelectorAll('[data-ln]').forEach(function(x){ S.loved[+x.dataset.ln].name=x.value; });
     $('lovedBox').querySelectorAll('[data-lc]').forEach(function(x){ S.loved[+x.dataset.lc].count=x.value; });
     $('lovedBox').querySelectorAll('[data-lr]').forEach(function(x){ S.loved[+x.dataset.lr].rank=x.value; });
