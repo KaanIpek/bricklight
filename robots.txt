@@ -12,5 +12,7 @@ Disallow: /eco-power-washing-2875/
 Disallow: /eco-power-washing-2875-img/
 Disallow: /cars-inc-b499/
 Disallow: /cars-inc-b499-img/
+Disallow: /southern-grill-36c9/
+Disallow: /southern-grill-36c9-img/
 
 Sitemap: https://kaanipek.github.io/bricklight/sitemap.xml

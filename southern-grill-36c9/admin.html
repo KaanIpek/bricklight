@@ -4,6 +4,11 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="robots" content="noindex, nofollow, noarchive">
+<!-- The editor link's secret lives in the URL fragment, which browsers never
+     send anywhere. This header covers the other half: it stops the PATH of
+     this page from being handed to Google Fonts, or to any site the owner
+     opens from here, in a Referer header. -->
+<meta name="referrer" content="no-referrer">
 <title>Southern Grill — Owner Editor</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -349,6 +354,31 @@ textarea{min-height:74px;resize:vertical}
   var PIN=null;
   try{ PIN=sessionStorage.getItem('sg_pin')||null; }catch(e){}
   function needPin(){ if(!PIN){ $('gate').style.display='flex'; return false; } return true; }
+
+  /* ══════════════════════════════════════════════════════════════════════════
+     THE EDIT LINK
+     The owner's link ends in #<32 hex characters>. That fragment is a 128-bit
+     key and it is the thing that actually protects publishing; the PIN is a
+     second, short lock for whoever is holding the phone.
+
+     Why the FRAGMENT and not the path. The link is delivered by SMS or
+     WhatsApp, and those apps fetch a URL to build the little preview card -
+     so a secret in the path is read by a third party's crawler before the
+     owner ever taps it, and lands in their logs. A fragment is never sent to
+     any server: not to the messaging app, not to GitHub Pages, not to
+     Cloudflare, not in a Referer header. It only ever exists in the browser.
+
+     Never rewrite the URL to strip it. The owner bookmarks or adds to the
+     home screen AFTER the page has loaded, and the shortcut captures the URL
+     as it stands at that moment - stripping the fragment makes a dead icon.
+
+     This page verifies nothing about the token. A client-side check would be
+     theatre; the Worker is the only thing that can say yes or no. The format
+     test below exists solely to tell the owner "your link is incomplete"
+     instead of letting them type a PIN into a page that can never publish. */
+  var TOKEN = '';
+  try{ TOKEN = (location.hash||'').replace(/^#/,'').trim().toLowerCase(); }catch(e){}
+  var TOKEN_OK = /^[0-9a-f]{32}$/.test(TOKEN);
   var PHOTO_OPTS='<option value="">No photo</option><option value="photos/web/gyro.jpg">Gyro</option><option value="photos/web/cheesesteak.jpg">Cheesesteak / melt</option><option value="photos/web/wings.jpg">Wings</option><option value="photos/web/burger.jpg">Burger</option><option value="photos/web/fries.jpg">Fries</option><option value="photos/web/wrap.jpg">Wrap</option><option value="photos/web/salad.jpg">Salad</option><option value="photos/web/tenders.jpg">Chicken tenders</option><option value="photos/web/onionrings.jpg">Onion rings</option><option value="photos/web/cheesecake.jpg">Cheesecake</option><option value="photos/web/smoothie.jpg">Smoothie / shake</option><option value="photos/web/coffee.jpg">Coffee</option>';
   function photoField(kind,i,cur){
     var known = PHOTO_OPTS.indexOf('value="'+cur+'"')>-1;
@@ -391,7 +421,18 @@ textarea{min-height:74px;resize:vertical}
 
   /* ---- gate. Nothing is verified here, because a client-side secret cannot be.
      The Worker is the only thing that can say yes or no. */
-  if(PIN) $('gate').style.display='none';
+
+  /* Opened without the key part of the link - somebody found this page rather
+     than being given it. Say so plainly instead of showing a PIN box that
+     could never work: a PIN prompt invites guessing and, for the owner who
+     tapped a truncated link, it makes a fixable problem look like a rejection. */
+  if(!TOKEN_OK){
+    $('gate').style.display='flex';
+    $('gate').querySelector('p').textContent =
+      'This page needs the full editor link. Open the link Bricklight sent you — the part after the # is what unlocks it.';
+    $('pin').style.display='none';
+    $('pinGo').style.display='none';
+  } else if(PIN) $('gate').style.display='none';
   $('pinGo').onclick=function(){
     var v=$('pin').value.trim();
     if(v.length<4){ $('pinErr').textContent='Enter your PIN.'; return; }
@@ -784,9 +825,18 @@ textarea{min-height:74px;resize:vertical}
         for(var k in patch) doc[k]=patch[k];                // splice ONLY the touched keys
         doc.publishedAt = new Date().toISOString();
         return fetch(API+'/c/'+SITE,{method:'PUT',
-          headers:{'Content-Type':'application/json','X-Edit-Pin':PIN}, body:JSON.stringify(doc)})
+          headers:{'Content-Type':'application/json','X-Edit-Pin':PIN,'X-Edit-Token':TOKEN},
+          body:JSON.stringify(doc)})
           .then(function(r){
             if(r.status===401||r.status===403){ authFail(); var e=new Error('pin'); e.auth=true; throw e; }
+            /* 429 has to be its own branch. Without it the generic "try again"
+               copy fires, the owner retries, every retry re-arms the limiter,
+               and the message never changes - so he concludes the site is
+               broken. The limit is 20 writes a minute; only a runaway loop or
+               somebody with a stolen link reaches it. */
+            if(r.status===429){ var t=new Error('rate'); t.rate=true; throw t; }
+            /* 404 on a write means the link is wrong, not the site. */
+            if(r.status===404){ var n=new Error('link'); n.link=true; throw n; }
             if(!r.ok) throw new Error('http');
             QUICK_TOUCHED = true;
             LIVE = doc;                                     // this IS the site now
@@ -798,6 +848,8 @@ textarea{min-height:74px;resize:vertical}
       /* authFail() has already re-opened the gate and said the PIN was rejected;
          a second toast saying the site is unreachable would contradict it. */
       .catch(function(err){ if(err && (err.auth || err.skip)) return;
+                            if(err && err.rate){ toast('Too many changes at once — wait a minute, then tap again'); return; }
+                            if(err && err.link){ toast('This editor link is not valid — ask Bricklight for a new one'); return; }
                             toast('Could not reach the site — try again'); })
       .then(function(){ [].forEach.call(btns,function(b){b.disabled=false;}); });
   }
@@ -952,9 +1004,18 @@ textarea{min-height:74px;resize:vertical}
         doc.publishedAt = new Date().toISOString();
         doc.docVersion  = 2;
         return fetch(API+'/c/'+SITE,{method:'PUT',
-          headers:{'Content-Type':'application/json','X-Edit-Pin':PIN}, body:JSON.stringify(doc)})
+          headers:{'Content-Type':'application/json','X-Edit-Pin':PIN,'X-Edit-Token':TOKEN},
+          body:JSON.stringify(doc)})
           .then(function(r){
             if(r.status===401||r.status===403){ authFail(); var e=new Error('pin'); e.auth=true; throw e; }
+            /* 429 has to be its own branch. Without it the generic "try again"
+               copy fires, the owner retries, every retry re-arms the limiter,
+               and the message never changes - so he concludes the site is
+               broken. The limit is 20 writes a minute; only a runaway loop or
+               somebody with a stolen link reaches it. */
+            if(r.status===429){ var t=new Error('rate'); t.rate=true; throw t; }
+            /* 404 on a write means the link is wrong, not the site. */
+            if(r.status===404){ var n=new Error('link'); n.link=true; throw n; }
             if(!r.ok) throw new Error('http');
             try{ localStorage.setItem(PUB, JSON.stringify(doc)); localStorage.removeItem(KEY); }catch(e){}
             $('pubmsg').innerHTML='✅ <b>Live now.</b> <a href="index.html" style="color:#9ae6b4">Open the site</a>';
@@ -965,9 +1026,11 @@ textarea{min-height:74px;resize:vertical}
          "Could not publish, try again" here - two contradictory messages, the
          second inviting a retry that would fail the same way. */
       .catch(function(err){
-        $('pubmsg').textContent = (err && err.auth)
-          ? 'Your PIN was rejected — enter it again above, then press Publish.'
-          : '⚠️ Could not publish. Your changes are still saved on this device — try again.';
+        $('pubmsg').textContent =
+          (err && err.auth) ? 'Your PIN was rejected — enter it again above, then press Publish.' :
+          (err && err.rate) ? 'Too many changes at once. Wait one minute, then press Publish again — nothing was lost.' :
+          (err && err.link) ? 'This editor link is not valid any more. Your changes are still saved on this device — contact Bricklight for a new link.' :
+          '⚠️ Could not publish. Your changes are still saved on this device — try again.';
       })
       .then(function(){ btn.disabled=false; btn.textContent=old; });
     $('pubbox').scrollIntoView({behavior:'smooth'});
