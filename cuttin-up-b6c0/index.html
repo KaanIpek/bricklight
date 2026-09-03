@@ -105,7 +105,7 @@
   .bl-expired{position:fixed;inset:0;z-index:10000;background:rgba(12,12,14,.96);color:#fff;
     display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;
     font-family:'Segoe UI',system-ui,sans-serif;padding:2rem}
-  .bl-expired h1{font-size:1.6rem;margin-bottom:.6rem}
+  .bl-expired h1,.bl-expired .bl-h{font-size:1.6rem;font-weight:700;margin-bottom:.6rem}
   .bl-expired p{color:#aaa;max-width:420px}
 </style>
 
@@ -118,7 +118,8 @@
   var EXP = new Date('2026-09-30T23:59:59');
   if (new Date() > EXP) {
     var d = document.createElement('div'); d.className='bl-expired';
-    d.innerHTML = '<h1>⏳ This preview has expired</h1><p>The demo window for this design has closed. Contact Bricklight Studio to reactivate it or make it live.</p>';
+    /* h1 degil: demo kabugunun bir basligi sayfanin tek h1'ini ikiye cikariyordu. */
+    d.innerHTML = '<p class="bl-h">⏳ This preview has expired</p><p>The demo window for this design has closed. Contact Bricklight Studio to reactivate it or make it live.</p>';
     document.body.appendChild(d);
   }
   ['contextmenu','selectstart','copy','cut','dragstart'].forEach(function(ev){
@@ -126,11 +127,28 @@
   });
   window.addEventListener('beforeprint', function(){ document.body.style.visibility='hidden'; });
   window.addEventListener('afterprint', function(){ document.body.style.visibility=''; });
+  /* Devtools sezgisi. Sabit bir esik ("outer - inner > 160") musteriyi kaybettirir:
+     tarayici yan paneli acikken, ya da sayfa %150-200 yakinlastirilmisken - kucuk
+     ekranli bir dizustunde son derece yaygin - o fark zaten 160'i asar ve satis
+     demosu "Preview paused" perdesiyle acilir. Bunun yerine ACILISTAKI farki taban
+     aliyoruz ve yalnizca fark SONRADAN buyurse tetikliyoruz. Devtools zaten acikken
+     gelen ziyaretciyi kaciriyoruz; bu, odeyecek musteriyi asla yanlis suclamamak
+     icin bilerek yapilan takas. Yakinlastirma devicePixelRatio'yu degistirdigi icin
+     onu ayri izleyip tabani yeniliyoruz, ve perde icin ust uste iki olcum ariyoruz. */
+  var _base = 0, _dpr = 0, _hits = 0;
+  function _gap(){ return Math.max(window.outerWidth - window.innerWidth,
+                                   window.outerHeight - window.innerHeight); }
+  function _rebase(){ _base = _gap(); _dpr = window.devicePixelRatio || 1; _hits = 0; }
+  _rebase();
   setInterval(function(){
-    var open = (window.outerWidth - window.innerWidth > 160) || (window.outerHeight - window.innerHeight > 160);
     var o = document.getElementById('bl-dt');
-    if (open && !o) { o=document.createElement('div'); o.id='bl-dt'; o.className='bl-expired';
-      o.innerHTML='<h1>🔒 Preview paused</h1><p>Developer tools are disabled on this preview. Close them to continue viewing, or contact Bricklight Studio for a live walkthrough.</p>'; document.body.appendChild(o); }
+    if (Math.abs((window.devicePixelRatio || 1) - _dpr) > 0.01) {   // yakinlastirma degisti
+      _rebase(); if (o) o.remove(); return;
+    }
+    var open = _gap() > _base + 160;
+    _hits = open ? _hits + 1 : 0;
+    if (_hits >= 2 && !o) { o=document.createElement('div'); o.id='bl-dt'; o.className='bl-expired';
+      o.innerHTML='<p class="bl-h">🔒 Preview paused</p><p>Developer tools are disabled on this preview. Close them to continue viewing, or contact Bricklight Studio for a live walkthrough.</p>'; document.body.appendChild(o); }
     if (!open && o) { o.remove(); }
   }, 800);
   document.addEventListener('keydown', function(e){
