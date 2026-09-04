@@ -14,5 +14,6 @@ Disallow: /cars-inc-b499/
 Disallow: /cars-inc-b499-img/
 Disallow: /southern-grill-36c9/
 Disallow: /southern-grill-36c9-img/
+Disallow: /lina-electronics-233a/
 
 Sitemap: https://kaanipek.github.io/bricklight/sitemap.xml
